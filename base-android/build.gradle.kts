@@ -1,12 +1,14 @@
 import com.baimsg.plugin.Dep
+import org.jetbrains.kotlin.kapt3.base.Kapt
 
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.baimsg.qstool.base"
+    namespace = "com.baimsg.qstool.base.android"
     compileSdk = Dep.compileSdk
 
     defaultConfig {
@@ -42,6 +44,9 @@ dependencies {
     api(Dep.AndroidX.Appcompat.resources)
     api(Dep.AndroidX.Activity.activityCompose)
 
+    /**
+     * compose
+     */
     api(Dep.Compose.ui)
     api(Dep.Compose.material)
     api(Dep.Compose.animation)
@@ -52,6 +57,12 @@ dependencies {
     api(Dep.Compose.foundation)
     api(Dep.Compose.runtime)
     api(Dep.Compose.runtimeLiveData)
+
+    /**
+     * Navigation
+     */
+    api(Dep.AndroidX.Navigation.compose)
+    api(Dep.AndroidX.Hilt.hiltNavigationCompose)
 
     api(Dep.Kotlin.coroutinesCore)
     /**
@@ -65,5 +76,12 @@ dependencies {
     api(Dep.AndroidX.splashscreen)
     api(Dep.AndroidX.palette)
     api(Dep.AndroidX.multiDex)
+
+    implementation(Dep.Hilt.library)
+    kapt(Dep.Hilt.compiler)
+
+    testImplementation(Dep.Libs.junit)
+    androidTestImplementation(Dep.AndroidX.Test.junitKtx)
+    androidTestImplementation(Dep.AndroidX.Test.espressoCore)
     coreLibraryDesugaring(Dep.Libs.desugar)
 }

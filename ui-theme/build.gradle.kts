@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.baimsg.qstool.base"
+    namespace = "com.baimsg.qstool.ui.theme"
     compileSdk = Dep.compileSdk
 
     defaultConfig {
@@ -17,43 +17,30 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Dep.composeCompilerVer
+        useLiveLiterals = false
+    }
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
 
         sourceCompatibility = Dep.javaVersion
         targetCompatibility = Dep.javaVersion
     }
-
     kotlinOptions {
         jvmTarget = Dep.kotlinJvmTarget
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
     }
 }
 
-java {
-    sourceCompatibility = Dep.javaVersion
-    targetCompatibility = Dep.javaVersion
-}
-
 dependencies {
-    api(fileTree("dir" to "libs", "include" to listOf("*.aar", "*.jar")))
-    /**
-     * Kotlin
-     */
-    api(Dep.Kotlin.stdlib)
-    api(Dep.Kotlin.serializationJson)
-    api(Dep.Kotlin.coroutinesCore)
-    /**
-     * 网络框架
-     */
-    api(Dep.Retrofit.library)
-    api(Dep.Retrofit.kotlinSerializerConverter)
-    api(Dep.OkHttp.library)
-    api(Dep.OkHttp.loggingInterceptor)
-
-    //其他常用sdk
-    api(Dep.Libs.mmkv)
-    api(Dep.Libs.store)
-
+    implementation(project(":base-android"))
+    debugImplementation(Dep.Compose.uiTooling)
+    debugImplementation(Dep.Compose.uiTestManifest)
     testImplementation(Dep.Libs.junit)
     androidTestImplementation(Dep.AndroidX.Test.junitKtx)
     androidTestImplementation(Dep.AndroidX.Test.espressoCore)

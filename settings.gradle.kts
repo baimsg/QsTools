@@ -3,6 +3,9 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+        maven { setUrl("https://plugins.gradle.org/m2/") }
+        maven { setUrl("https://jitpack.io") }
         mavenLocal()
     }
 }
@@ -24,3 +27,4 @@ includeBuild("./plugin")
 include(":app")
 include(":base")
 include(":base-android")
+include(":ui-theme")

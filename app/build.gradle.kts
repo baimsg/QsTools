@@ -23,6 +23,7 @@ android {
     namespace = "com.baimsg.qstool"
     compileSdk = Dep.compileSdk
 
+    compileSdkPreview = "UpsideDownCake"
     /**
      * 签名信息
      *
@@ -44,6 +45,8 @@ android {
     }
 
     defaultConfig {
+        compileSdkPreview = "UpsideDownCake"
+
         applicationId = Dep.packageName
         minSdk = Dep.minSdk
         targetSdk = Dep.targetSdk
@@ -131,5 +134,13 @@ dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.aar", "*.jar")))
     implementation(project(":base"))
     implementation(project(":base-android"))
+    implementation(project(":ui-theme"))
+
+    debugImplementation(Dep.Compose.uiTooling)
+    debugImplementation(Dep.Compose.uiTestManifest)
+
+    testImplementation(Dep.Libs.junit)
+    androidTestImplementation(Dep.AndroidX.Test.junitKtx)
+    androidTestImplementation(Dep.AndroidX.Test.espressoCore)
     coreLibraryDesugaring(Dep.Libs.desugar)
 }

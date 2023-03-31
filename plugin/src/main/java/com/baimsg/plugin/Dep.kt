@@ -37,6 +37,7 @@ object Dep {
         const val runtimeRxJava2 = "androidx.compose.runtime:runtime-rxjava2:$composeVerUp"
         const val ui = "androidx.compose.ui:ui:$composeVerUp"
         const val uiTooling = "androidx.compose.ui:ui-tooling:$composeVerUp"
+        const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$composeVerUp"
         const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$composeVerUp"
         const val uiUtil = "androidx.compose.ui:ui-util:$composeVerUp"
 
@@ -374,6 +375,24 @@ object Dep {
             const val webkit = "androidx.webkit:webkit:1.6.0"
         }
 
+        object Test {
+            private const val test_version = "1.5.0"
+            const val core = "androidx.test:core:$test_version"
+            const val coreKtx = "androidx.test:core-ktx:$test_version"
+            const val espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
+            const val junit = "androidx.test.ext:junit:1.1.5"
+            const val junitKtx = "androidx.test.ext:junit-ktx:1.1.5"
+            const val truth = "androidx.test.ext:truth:1.5.0"
+            const val runner = "androidx.test:runner:1.5.2"
+            const val orchestrator = "androidx.test:orchestrator:1.4.2"
+            const val monitor = "androidx.test:monitor:1.6.1"
+            const val rules = "androidx.test:rules:1.5.0"
+            const val services = "androidx.test.services:test-services:1.4.2"
+            const val servicesStorage = "androidx.test.services:storage:1.4.2"
+            const val annotation = "androidx.test:annotation:1.0.1"
+
+        }
+
     }
 
     object Kotlin {
@@ -424,6 +443,7 @@ object Dep {
         const val mmkv = "com.tencent:mmkv-static:1.2.14"
         const val store = "com.dropbox.mobile.store:store4:4.0.5"
         const val desugar = "com.android.tools:desugar_jdk_libs:1.1.5"
+        const val junit = "junit:junit:4.13.2"
     }
 
 
