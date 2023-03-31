@@ -134,7 +134,11 @@ dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.aar", "*.jar")))
     implementation(project(":base"))
     implementation(project(":base-android"))
+    implementation(project(":ui-resources"))
     implementation(project(":ui-theme"))
+    implementation(project(":ui-components"))
+
+    kapt(Dep.AndroidX.LifeCycle.compiler)
 
     debugImplementation(Dep.Compose.uiTooling)
     debugImplementation(Dep.Compose.uiTestManifest)

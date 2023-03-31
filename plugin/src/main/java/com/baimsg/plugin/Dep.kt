@@ -41,9 +41,40 @@ object Dep {
         const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$composeVerUp"
         const val uiUtil = "androidx.compose.ui:ui-util:$composeVerUp"
 
-
     }
 
+    object Accompanist {
+        private const val accompanist_version = "0.30.0"
+        const val systemUiController =
+            "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+        const val themeAdapterAppcompat =
+            "com.google.accompanist:accompanist-themeadapter-appcompat:$accompanist_version"
+        const val themeAdapterMaterial =
+            "com.google.accompanist:accompanist-themeadapter-material:$accompanist_version"
+        const val themeAdapterMaterial3 =
+            "com.google.accompanist:accompanist-themeadapter-material3:$accompanist_version"
+        const val permissions =
+            "com.google.accompanist:accompanist-permissions:$accompanist_version"
+        const val placeholder =
+            "com.google.accompanist:accompanist-placeholder:$accompanist_version"
+        const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
+        const val navigationAnimation =
+            "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+        const val navigationMaterial =
+            "com.google.accompanist:accompanist-navigation-material:$accompanist_version"
+        const val drawablePainter =
+            "com.google.accompanist:accompanist-drawablepainter:$accompanist_version"
+        const val webView = "com.google.accompanist:accompanist-webview:$accompanist_version"
+        const val adaptive = "com.google.accompanist:accompanist-adaptive:$accompanist_version"
+        const val testHarness =
+            "com.google.accompanist:accompanist-testharness:$accompanist_version"
+        const val insets = "com.google.accompanist:accompanist-insets:$accompanist_version"
+        const val swipeRefresh =
+            "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
+        const val appcompatTheme =
+            "com.google.accompanist:accompanist-appcompat-theme:$accompanist_version"
+        const val pager = "com.google.accompanist:accompanist-pager:$accompanist_version"
+    }
 
     object AndroidX {
 
@@ -426,10 +457,16 @@ object Dep {
     }
 
     object Coil {
-        private const val coil = "2.1.0"
-        const val library = "io.coil-kt:coil:$coil"
-        const val gif = "io.coil-kt:coil-gif:$coil"
-        const val compose = "io.coil-kt:coil-compose:$coil"
+        private const val coil_version = "2.3.0"
+        const val library = "io.coil-kt:coil:$coil_version"
+        const val base = "io.coil-kt:coil-base:$coil_version"
+        const val gif = "io.coil-kt:coil-gif:$coil_version"
+        const val svg = "io.coil-kt:coil-svg:$coil_version"
+        const val video = "io.coil-kt:coil-video:$coil_version"
+        const val test = "io.coil-kt:coil-test:$coil_version"
+        const val bom = "io.coil-kt:coil-bom:$coil_version"
+        const val compose = "io.coil-kt:coil-compose:$coil_version"
+        const val composeBase = "io.coil-kt:coil-compose-base:$coil_version"
     }
 
     object Hilt {
@@ -437,6 +474,7 @@ object Dep {
         const val library = "com.google.dagger:hilt-android:$hilt"
         const val compiler = "com.google.dagger:hilt-compiler:$hilt"
     }
+
 
     //第三方库
     object Libs {

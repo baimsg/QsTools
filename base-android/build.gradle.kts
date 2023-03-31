@@ -59,6 +59,22 @@ dependencies {
     api(Dep.Compose.runtimeLiveData)
 
     /**
+     * Accompanist
+     */
+    api(Dep.Accompanist.swipeRefresh)
+    api(Dep.Accompanist.navigationAnimation)
+    api(Dep.Accompanist.pager)
+    api(Dep.Accompanist.placeholder)
+    api(Dep.Accompanist.permissions)
+    api(Dep.Accompanist.webView)
+
+    api(Dep.Coil.gif)
+    api(Dep.Coil.svg)
+    api(Dep.Coil.video)
+    api(Dep.Coil.compose)
+    api(Dep.Coil.composeBase)
+
+    /**
      * Navigation
      */
     api(Dep.AndroidX.Navigation.compose)
@@ -77,9 +93,10 @@ dependencies {
     api(Dep.AndroidX.palette)
     api(Dep.AndroidX.multiDex)
 
+    implementation(project(":base"))
     implementation(Dep.Hilt.library)
-    kapt(Dep.Hilt.compiler)
 
+    kapt(Dep.Hilt.compiler)
     testImplementation(Dep.Libs.junit)
     androidTestImplementation(Dep.AndroidX.Test.junitKtx)
     androidTestImplementation(Dep.AndroidX.Test.espressoCore)
