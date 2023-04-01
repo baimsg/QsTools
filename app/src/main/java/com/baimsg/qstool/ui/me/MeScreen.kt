@@ -1,5 +1,6 @@
 package com.baimsg.qstool.ui.me
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 /**
@@ -8,4 +9,5 @@ import androidx.compose.runtime.Composable
  **/
 @Composable
 fun MeScreen() {
+    Text(text = "me")
 }

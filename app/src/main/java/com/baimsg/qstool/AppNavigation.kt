@@ -13,6 +13,7 @@ import com.baimsg.qstool.base.animation.fadeExit
 import com.baimsg.qstool.base.animation.openEnter
 import com.baimsg.qstool.base.animation.openExit
 import com.baimsg.qstool.ui.home.HomeScreen
+import com.baimsg.qstool.ui.login.LoginScreen
 import com.baimsg.qstool.ui.me.MeScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -33,7 +34,7 @@ internal sealed class Screen(val route: String) {
 /**
  * 子页面封装
  */
-private sealed class LeafScreen(
+internal sealed class LeafScreen(
     private val route: String,
 ) {
     /**
@@ -46,6 +47,7 @@ private sealed class LeafScreen(
 
     object Home : LeafScreen("home")
     object Me : LeafScreen("me")
+    object Login : LeafScreen("login")
 }
 
 
@@ -80,6 +82,7 @@ private fun NavGraphBuilder.addHomeTopLevel(navController: NavController) {
         route = root.route, startDestination = LeafScreen.Home.createRoute(root)
     ) {
         addHome(navController, root)
+        addLogin(navController, root)
     }
 }
 
@@ -96,7 +99,16 @@ private fun NavGraphBuilder.addMeTopLevel(navController: NavController) {
 @OptIn(ExperimentalAnimationApi::class)
 private fun NavGraphBuilder.addHome(navController: NavController, root: Screen) {
     composable(route = LeafScreen.Home.createRoute(root)) {
-        HomeScreen()
+        HomeScreen(openLoginScreen = {
+            navController.navigate(LeafScreen.Login.createRoute(root))
+        })
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+private fun NavGraphBuilder.addLogin(navController: NavController, root: Screen) {
+    composable(route = LeafScreen.Login.createRoute(root)) {
+        LoginScreen()
     }
 }
 

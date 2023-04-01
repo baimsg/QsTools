@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
+import com.baimsg.qstool.LeafScreen
 
 import com.baimsg.qstool.Screen
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
@@ -216,7 +217,14 @@ internal fun NavController.currentScreenAsState(viewModel: MainActivityViewModel
                  * 不是在主页的时候隐藏bottomBar
                  */
                 destination.route?.let { route ->
-                    logD(route)
+                    val isMain = when (route) {
+                        LeafScreen.Home.createRoute(Screen.Home) -> true
+                        LeafScreen.Me.createRoute(Screen.Me) -> true
+                        else -> false
+                    }
+                    if (hasBottomBar.value != isMain) {
+                        viewModel.hasBottomBar = isMain
+                    }
                 }
             }
         addOnDestinationChangedListener(listener)
