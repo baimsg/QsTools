@@ -25,6 +25,7 @@ private val PinkColorPalette = QstoolComposeColors(
     topBarTextSelect = white1,
     bottomBar = white,
     background = white2,
+    progressColor = deepPurple4,
     textPrimary = black3,
     textSecondary = grey1,
     icon = black,
@@ -35,16 +36,17 @@ private val PinkColorPalette = QstoolComposeColors(
  * 日间
  */
 private val LightColorPalette = QstoolComposeColors(
-    topBarBackground = indigo5,
-    topBarIcon = black4,
-    topBarText = black3,
-    topBarTextSelect = indigo5,
+    topBarBackground = indigo6,
+    topBarIcon = white,
+    topBarText = white1,
+    topBarTextSelect = white1,
     bottomBar = white,
     background = white2,
+    progressColor = lightGreen2,
     textPrimary = black3,
     textSecondary = grey1,
     icon = black,
-    iconSelect = indigo5,
+    iconSelect = indigo6,
 )
 
 /**
@@ -57,6 +59,7 @@ private val DarkColorPalette = QstoolComposeColors(
     topBarTextSelect = white1,
     bottomBar = black1,
     background = black2,
+    progressColor = white1,
     textPrimary = white4,
     textSecondary = grey1,
     icon = white5,
@@ -83,6 +86,7 @@ fun QstoolComposeThem(
     val topBarTextSelect = animateColorAsState(targetColors.topBarTextSelect, TweenSpec(600))
     val bottomBar = animateColorAsState(targetColors.bottomBar, TweenSpec(600))
     val background = animateColorAsState(targetColors.background, TweenSpec(600))
+    val progressColor = animateColorAsState(targetColors.progressColor, TweenSpec(600))
     val textPrimary = animateColorAsState(targetColors.textPrimary, TweenSpec(600))
     val textSecondary = animateColorAsState(targetColors.textSecondary, TweenSpec(600))
     val icon = animateColorAsState(targetColors.icon, TweenSpec(600))
@@ -95,6 +99,7 @@ fun QstoolComposeThem(
         topBarTextSelect = topBarTextSelect.value,
         bottomBar = bottomBar.value,
         background = background.value,
+        progressColor = progressColor.value,
         textPrimary = textPrimary.value,
         textSecondary = textSecondary.value,
         icon = icon.value,
@@ -118,6 +123,7 @@ class QstoolComposeColors(
     topBarTextSelect: Color,
     bottomBar: Color,
     background: Color,
+    progressColor: Color,
     textPrimary: Color,
     textSecondary: Color,
     icon: Color,
@@ -134,6 +140,8 @@ class QstoolComposeColors(
     var bottomBar: Color by mutableStateOf(bottomBar, structuralEqualityPolicy())
         internal set
     var background: Color by mutableStateOf(background, structuralEqualityPolicy())
+        internal set
+    var progressColor: Color by mutableStateOf(progressColor, structuralEqualityPolicy())
         internal set
     var textPrimary: Color by mutableStateOf(textPrimary, structuralEqualityPolicy())
         internal set

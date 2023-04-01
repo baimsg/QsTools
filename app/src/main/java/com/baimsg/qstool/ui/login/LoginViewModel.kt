@@ -1,26 +1,60 @@
 package com.baimsg.qstool.ui.login
 
 import android.app.Application
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.baimsg.qstool.ui.resources.R
+import com.baimsg.qstool.utils.extensions.logD
+import com.baimsg.qstool.utils.extensions.logE
+import com.baimsg.qstool.utils.extensions.stateInDefault
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
 /**
  * Create by Baimsg on 2023/4/1
  *
  **/
 @HiltViewModel
-class LoginViewModel @Inject constructor(app: Application) : ViewModel() {
+internal class LoginViewModel @Inject constructor(app: Application) : ViewModel() {
 
     val url: String by lazy {
         app.getString(R.string.qq_login_url)
     }
 
-    val title: MutableState<String> by lazy {
-        mutableStateOf("登录QQ")
+    private val _progress: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val _animateDuration: MutableStateFlow<Int> = MutableStateFlow(200)
+
+    private val _pendingActions = MutableSharedFlow<LoginAction>()
+
+    val loginViewState = combine(_progress, _animateDuration, ::LoginViewState).apply {
+        logD(this)
+    }.stateInDefault(
+        viewModelScope, LoginViewState.EMPTY
+    )
+
+    init {
+        viewModelScope.launch {
+            _pendingActions.collectLatest { action ->
+                when (action) {
+                    is LoginAction.SendProgress -> {
+                        if (action.progress != _progress.value) {
+                            _progress.value = action.progress
+                            _animateDuration.value = action.animateDuration
+                        }
+                    }
+                }
+            }
+        }
     }
 
+    fun submitAction(loginAction: LoginAction) {
+        viewModelScope.launch {
+            _pendingActions.emit(loginAction)
+        }
+    }
 }

@@ -10,8 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.baimsg.qstool.AppViewModelStore
+import com.baimsg.qstool.ui.main.MainActivity
 import com.baimsg.qstool.ui.main.MainActivityViewModel
+import com.baimsg.qstool.utils.extensions.logE
 
 /**
  * Create by Baimsg on 2023/4/1
