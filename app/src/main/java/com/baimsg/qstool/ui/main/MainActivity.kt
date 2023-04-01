@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     //取消全屏
                     cancelFullScreen()
                 }
-                MainScreen()
+                MainScreen(viewModel)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.baimsg.ui.coil
+package com.baimsg.qstool.ui.coil
 
 import android.content.Context
 import android.graphics.Bitmap

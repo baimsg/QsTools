@@ -148,7 +148,7 @@ private val localQstoolComposeColors by lazy {
     compositionLocalOf { LightColorPalette }
 }
 
-class QstoolComposeThem {
+object QstoolComposeThem {
     val colors: QstoolComposeColors
         @Composable get() = localQstoolComposeColors.current
 

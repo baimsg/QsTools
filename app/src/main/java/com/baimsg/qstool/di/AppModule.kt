@@ -1,7 +1,7 @@
 package com.baimsg.qstool.di
 
 import com.baimsg.qstool.base.inititializer.AppInitializers
-import com.baimsg.ui.coil.CoilAppInitializer
+import com.baimsg.qstool.ui.coil.CoilAppInitializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.baimsg.ui.components"
+    namespace = "com.baimsg.qstool.ui.components"
     compileSdk = Dep.compileSdk
 
     defaultConfig {
