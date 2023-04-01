@@ -4,8 +4,10 @@ import java.util.*
 
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
+
 }
 
 fun runCommand(project: Project, command: String): String {
@@ -138,6 +140,8 @@ dependencies {
     implementation(project(":ui-theme"))
     implementation(project(":ui-components"))
 
+    implementation(Dep.Hilt.hilt)
+    kapt(Dep.Hilt.compiler)
     kapt(Dep.AndroidX.LifeCycle.compiler)
 
     debugImplementation(Dep.Compose.uiTooling)

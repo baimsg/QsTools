@@ -15,9 +15,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.baimsg.qstool.AppNavigation
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.web.AccompanistWebViewClient
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.rememberWebViewState
 
 /**
  * Create by Baimsg on 2023/3/31
@@ -28,7 +25,7 @@ import com.google.accompanist.web.rememberWebViewState
 @OptIn(ExperimentalAnimationApi::class)
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun MainScreen(viewModel: MainActivityViewModel) {
+internal fun MainScreen(viewModel: MainActivityViewModel) {
     val navController = rememberAnimatedNavController()
     val configuration = LocalConfiguration.current
     val useBottomNavigation by remember {

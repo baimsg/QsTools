@@ -3,7 +3,9 @@ package com.baimsg.qstool.ui.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.baimsg.qstool.AppViewModelStore
 import com.baimsg.qstool.base.provider.QstoolWindowInsetsProvider
 import com.baimsg.qstool.base.utils.cancelFullScreen
@@ -20,7 +22,7 @@ class MainActivity : ComponentActivity() {
         // 将屏幕扩展到状态栏
         translucent()
         setContent {
-            QstoolContent(viewModel = AppViewModelStore.instance().viewModels())
+            QstoolContent(viewModel =  AppViewModelStore.instance().viewModels())
         }
     }
 

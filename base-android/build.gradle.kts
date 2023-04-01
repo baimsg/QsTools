@@ -1,8 +1,8 @@
 import com.baimsg.plugin.Dep
-import org.jetbrains.kotlin.kapt3.base.Kapt
 
 plugins {
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
 }
@@ -57,7 +57,8 @@ dependencies {
     api(Dep.Compose.foundation)
     api(Dep.Compose.runtime)
     api(Dep.Compose.runtimeLiveData)
-
+    api(Dep.AndroidX.ConstraintLayout.compose)
+    api(Dep.AndroidX.ConstraintLayout.core)
     /**
      * Accompanist
      */
@@ -94,8 +95,8 @@ dependencies {
     api(Dep.AndroidX.multiDex)
 
     implementation(project(":base"))
-    implementation(Dep.Hilt.library)
 
+    implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
     testImplementation(Dep.Libs.junit)
     androidTestImplementation(Dep.AndroidX.Test.junitKtx)

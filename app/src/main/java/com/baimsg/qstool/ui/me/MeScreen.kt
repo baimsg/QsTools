@@ -8,6 +8,6 @@ import androidx.compose.runtime.Composable
  *
  **/
 @Composable
-fun MeScreen() {
+internal fun MeScreen() {
     Text(text = "me")
 }

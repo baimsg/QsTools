@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
  *
  **/
 
+
 /**
  * 粉色
  */
@@ -34,16 +35,16 @@ private val PinkColorPalette = QstoolComposeColors(
  * 日间
  */
 private val LightColorPalette = QstoolComposeColors(
-    topBarBackground = white,
+    topBarBackground = indigo5,
     topBarIcon = black4,
     topBarText = black3,
-    topBarTextSelect = pink4,
+    topBarTextSelect = indigo5,
     bottomBar = white,
     background = white2,
     textPrimary = black3,
     textSecondary = grey1,
     icon = black,
-    iconSelect = pink4,
+    iconSelect = indigo5,
 )
 
 /**

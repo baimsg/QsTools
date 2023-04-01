@@ -108,7 +108,9 @@ private fun NavGraphBuilder.addHome(navController: NavController, root: Screen) 
 @OptIn(ExperimentalAnimationApi::class)
 private fun NavGraphBuilder.addLogin(navController: NavController, root: Screen) {
     composable(route = LeafScreen.Login.createRoute(root)) {
-        LoginScreen()
+        LoginScreen(onBack = {
+            navController.navigateUp()
+        })
     }
 }
 

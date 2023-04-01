@@ -2,6 +2,7 @@ import com.baimsg.plugin.Dep
 
 plugins {
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
 }
@@ -42,8 +43,10 @@ android {
 dependencies {
     implementation(project(":base"))
     implementation(project(":base-android"))
+    implementation(project(":ui-resources"))
+    implementation(project(":ui-theme"))
 
-    implementation(Dep.Hilt.library)
+    implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
 
     debugImplementation(Dep.Compose.uiTooling)

@@ -1,14 +1,12 @@
 package com.baimsg.qstool.base.provider
 
 import android.annotation.SuppressLint
-import android.view.View
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.Insets
-import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.baimsg.qstool.base.android.R
@@ -18,7 +16,7 @@ import com.baimsg.qstool.base.android.R
  *
  **/
 @SuppressLint("CompositionLocalNaming")
-val qstoolWindowInsets = staticCompositionLocalOf { WindowInsetsCompat.CONSUMED }
+val localQstoolWindowInsets = staticCompositionLocalOf { WindowInsetsCompat.CONSUMED }
 
 @Composable
 fun QstoolWindowInsetsProvider(content: @Composable () -> Unit) {
@@ -41,7 +39,7 @@ fun QstoolWindowInsetsProvider(content: @Composable () -> Unit) {
         view.requestApplyInsets()
     }
 
-    CompositionLocalProvider(qstoolWindowInsets provides windowInsets.value) {
+    CompositionLocalProvider(localQstoolWindowInsets provides windowInsets.value) {
         content()
     }
 

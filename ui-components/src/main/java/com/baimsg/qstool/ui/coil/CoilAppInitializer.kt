@@ -18,8 +18,7 @@ import javax.inject.Inject
  **/
 class CoilAppInitializer @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val dispatchers: CoroutineDispatchers,
-    private val okHttpClient: OkHttpClient,
+    private val dispatchers: CoroutineDispatchers
 ) : AppInitializer {
 
     override fun init(application: Application) {

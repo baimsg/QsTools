@@ -8,13 +8,20 @@ import android.webkit.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.baimsg.qstool.AppViewModelStore
+import com.baimsg.qstool.ui.components.TopBar
+import com.baimsg.qstool.ui.components.TopBarBackIconItem
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 import com.baimsg.qstool.utils.extensions.logE
 import com.baimsg.qstool.ui.web.setDefaultSettings
@@ -28,8 +35,12 @@ import com.google.accompanist.web.rememberWebViewState
  *
  **/
 @Composable
-fun LoginScreen() {
+internal fun LoginScreen(onBack: () -> Unit) {
+    LoginScreen(onBack = onBack, viewModel = hiltViewModel())
+}
 
+@Composable
+internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
     val loadProgress = remember { mutableStateOf(0f) }
 
     /**
@@ -37,11 +48,14 @@ fun LoginScreen() {
      */
     val webViewState =
         rememberWebViewState(url = "https://accounts.qq.com/safe/securityphone?from=setting")
-
-
     Column(Modifier.fillMaxSize()) {
-        logE(loadProgress.value)
-        TopAppBar(Modifier.fillMaxWidth()) {}
+        TopBar(
+            title = "登录QQ", leftItems = listOf(
+                TopBarBackIconItem(
+                    tint = QstoolComposeThem.colors.topBarIcon, onClick = onBack
+                )
+            )
+        )
         LinearProgressIndicator(
             progress = loadProgress.value,
             modifier = Modifier.fillMaxWidth(),
