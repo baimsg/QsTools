@@ -36,7 +36,7 @@ private val PinkColorPalette = QstoolComposeColors(
  * 日间
  */
 private val LightColorPalette = QstoolComposeColors(
-    topBarBackground = indigo6,
+    topBarBackground = indigo5,
     topBarIcon = white,
     topBarText = white1,
     topBarTextSelect = white1,
@@ -59,11 +59,11 @@ private val DarkColorPalette = QstoolComposeColors(
     topBarTextSelect = white1,
     bottomBar = black1,
     background = black2,
-    progressColor = white1,
+    progressColor = lightGreen2,
     textPrimary = white4,
     textSecondary = grey1,
     icon = white5,
-    iconSelect = pink4,
+    iconSelect = indigo5,
 )
 
 @OptIn(ExperimentalFoundationApi::class)
