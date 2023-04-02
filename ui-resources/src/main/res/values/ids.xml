@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="qstool_window_inset_cache" type="id" />
+    <item name="qstool_modals" type="id"/>
+</resources>

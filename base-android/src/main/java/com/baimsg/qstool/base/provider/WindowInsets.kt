@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.baimsg.qstool.base.android.R
+import com.baimsg.qstool.ui.resources.R
 
 /**
  * Create by Baimsg on 2023/3/30
@@ -45,7 +45,7 @@ fun QstoolWindowInsetsProvider(content: @Composable () -> Unit) {
 
 }
 
-data class DpInsets(val left: Dp, val top: Dp, val right: Dp, val bottom: Dp){
+data class DpInsets(val left: Dp, val top: Dp, val right: Dp, val bottom: Dp) {
     companion object {
         val NONE = DpInsets(0.dp, 0.dp, 0.dp, 0.dp)
     }

@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/base-android" />
+            <option value="$PROJECT_DIR$/common-data" />
             <option value="$PROJECT_DIR$/plugin" />
             <option value="$PROJECT_DIR$/ui-components" />
             <option value="$PROJECT_DIR$/ui-resources" />

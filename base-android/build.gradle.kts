@@ -95,6 +95,7 @@ dependencies {
     api(Dep.AndroidX.multiDex)
 
     implementation(project(":base"))
+    implementation(project(":ui-resources"))
 
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)

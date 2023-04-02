@@ -3,20 +3,20 @@ package com.baimsg.qstool.ui
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-val nutPrimaryColor = Color(0xFF00A8E1)
-val nutSeparatorColor = Color(0xFFCCCCCC)
-val nutIndicationColor = Color(0xFF777777)
-val nutTextMainColor = Color.Black
-val nutTextDescColor = Color(0xFF666666)
+val defaultPrimaryColor = Color(0xFF00A8E1)
+val defaultSeparatorColor = Color(0xFFCCCCCC)
+val defaultIndicationColor = Color(0xFF777777)
+val defaultTextMainColor = Color.Black
+val defaultTextDescColor = Color(0xFF666666)
 
 
-val nutTopBarHeight = 48.dp
-const val nutTopBarZIndex = 32f
-val nutCommonHorSpace = 20.dp
-val nutScrollAlphaChangeMaxOffset = 20.dp
+val defaultTopBarHeight = 48.dp
+const val defaultTopBarZIndex = 32f
+val defaultCommonHorSpace = 20.dp
+val defaultScrollAlphaChangeMaxOffset = 20.dp
 
 
-val nutDialogVerEdgeProtectionMargin = 44.dp
-val nutToastVerEdgeProtectionMargin = 96.dp
+val defaultDialogVerEdgeProtectionMargin = 44.dp
+val defaultToastVerEdgeProtectionMargin = 96.dp
 
 

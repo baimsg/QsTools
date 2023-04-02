@@ -34,9 +34,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.baimsg.qstool.base.provider.dp
 import com.baimsg.qstool.base.provider.localQstoolWindowInsets
 import com.baimsg.qstool.ui.layout.PressWithAlphaBox
-import com.baimsg.qstool.ui.nutScrollAlphaChangeMaxOffset
+import com.baimsg.qstool.ui.defaultScrollAlphaChangeMaxOffset
 import com.baimsg.qstool.ui.nutTopBarHeight
-import com.baimsg.qstool.ui.nutTopBarZIndex
+import com.baimsg.qstool.ui.defaultTopBarZIndex
 import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 
@@ -257,10 +257,10 @@ fun TopBarWithLazyScrollState(
     subTitle: CharSequence = "",
     alignTitleCenter: Boolean = true,
     height: Dp = nutTopBarHeight,
-    zIndex: Float = nutTopBarZIndex,
+    zIndex: Float = defaultTopBarZIndex,
     backgroundColor: Color = QstoolComposeThem.colors.topBarBackground,
     changeWithBackground: Boolean = false,
-    scrollAlphaChangeMaxOffset: Dp = nutScrollAlphaChangeMaxOffset,
+    scrollAlphaChangeMaxOffset: Dp = defaultScrollAlphaChangeMaxOffset,
     shadowElevation: Dp = 16.dp,
     shadowAlpha: Float = 0.6f,
     separatorHeight: Dp = 0.dp,
@@ -323,7 +323,7 @@ fun TopBar(
     subTitle: CharSequence = "",
     alignTitleCenter: Boolean = true,
     height: Dp = nutTopBarHeight,
-    zIndex: Float = nutTopBarZIndex,
+    zIndex: Float = defaultTopBarZIndex,
     backgroundColor: Color = QstoolComposeThem.colors.topBarBackground,
     shadowElevation: Dp = 16.dp,
     shadowAlpha: Float = 0.4f,
