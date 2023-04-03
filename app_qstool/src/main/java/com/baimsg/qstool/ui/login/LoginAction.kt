@@ -1,5 +1,7 @@
 package com.baimsg.qstool.ui.login
 
+import com.baimsg.qstool.data.models.Cookies
+
 /**
  * Create by Baimsg on 2023/4/2
  * 登录意图
@@ -19,5 +21,5 @@ internal sealed class LoginAction {
      * 登录成功
      * @param cookies
      */
-    class LoginSuccessful(val cookies: String) : LoginAction()
+    class LoginSuccessful(val cookies: Cookies) : LoginAction()
 }

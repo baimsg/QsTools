@@ -18,4 +18,6 @@ data class Cookies(
     @SerialName("p_skey") val pSKey: String = "",
     @SerialName("ptcz") val ptcZ: String = "",
     @SerialName("pt4_token") val pt4Token: String = "",
-) : Serializable
+) : Serializable {
+    val qq: Long = Regex("\\d+").find(uin)?.value?.toLong() ?: 0
+}

@@ -2,6 +2,7 @@ import com.baimsg.plugin.Dep
 
 plugins {
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization")
@@ -49,6 +50,7 @@ dependencies {
      * Room数据库
      */
     api(Dep.AndroidX.Room.roomKtx)
+    api(Dep.AndroidX.Room.common)
     api(Dep.AndroidX.Room.runtime)
     api(Dep.AndroidX.Room.paging)
     kapt(Dep.AndroidX.Room.compiler)

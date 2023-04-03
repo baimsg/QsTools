@@ -3,9 +3,12 @@ package com.baimsg.qstool.ui.login
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baimsg.qstool.data.db.daos.CookieRecordDao
+import com.baimsg.qstool.data.models.entities.CookieRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.baimsg.qstool.ui.resources.R
+import com.baimsg.qstool.utils.extensions.now
 import com.baimsg.qstool.utils.extensions.stateInDefault
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +21,9 @@ import kotlinx.coroutines.launch
  *
  **/
 @HiltViewModel
-internal class LoginViewModel @Inject constructor(app: Application) : ViewModel() {
+internal class LoginViewModel @Inject constructor(
+    app: Application, cookieRecordDao: CookieRecordDao
+) : ViewModel() {
 
     val url: String by lazy {
         app.getString(R.string.qq_login_url)
@@ -47,7 +52,11 @@ internal class LoginViewModel @Inject constructor(app: Application) : ViewModel(
                         }
                     }
                     is LoginAction.LoginSuccessful -> {
-
+                        cookieRecordDao.updateOrInsert(
+                            CookieRecord(
+                                uin = action.cookies.qq, loginTime = now(), cookies = action.cookies
+                            )
+                        )
                     }
                 }
             }

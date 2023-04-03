@@ -141,10 +141,24 @@ dependencies {
     implementation(project(":ui-theme"))
     implementation(project(":ui-components"))
 
+    /**
+     * Hilt
+     */
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
+    /**
+     * lifeCycle
+     */
     kapt(Dep.AndroidX.LifeCycle.compiler)
 
+    /***
+     * Room
+     */
+    kapt(Dep.AndroidX.Room.compiler)
+    testImplementation(Dep.AndroidX.Room.testing)
+    /**
+     * compose
+     */
     debugImplementation(Dep.Compose.uiTooling)
     debugImplementation(Dep.Compose.uiTestManifest)
 

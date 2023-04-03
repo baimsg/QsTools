@@ -27,6 +27,7 @@ import com.baimsg.qstool.ui.modal.toast
 import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 import com.baimsg.qstool.ui.web.setDefaultSettings
+import com.baimsg.qstool.utils.JSON
 import com.baimsg.qstool.utils.extensions.isNotNullAndNotBlank
 import com.baimsg.qstool.utils.extensions.logE
 import com.google.accompanist.web.AccompanistWebChromeClient
@@ -34,6 +35,7 @@ import com.google.accompanist.web.AccompanistWebViewClient
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.put
 
 /**
@@ -125,7 +127,7 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
                 handler?.proceed()
             }
 
-            override fun onLoadResource(view: WebView?, url: String?) {
+            override fun onLoadResource(webView: WebView?, url: String?) {
                 if (!url?.toUri()?.getQueryParameters("bkn").isNullOrEmpty()) {
                     val cookies =
                         CookieManager.getInstance().getCookie("https://accounts.qq.com") ?: ""
@@ -136,16 +138,19 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
                                 put(values.first(), values.last())
                             }
                         }.apply {
-                            logE(this)
+                            viewModel.submitAction(
+                                loginAction = LoginAction.LoginSuccessful(
+                                    JSON.decodeFromJsonElement(this)
+                                )
+                            )
                         }
-
-                        view?.toast("登录成功")
+                        view.toast("登录成功")
                     } else {
-                        view?.toast("获取cookies失败")
+                        view.toast("获取cookies失败")
                     }
                 }
 
-                super.onLoadResource(view, url)
+                super.onLoadResource(webView, url)
             }
 
         }, chromeClient = object : AccompanistWebChromeClient() {

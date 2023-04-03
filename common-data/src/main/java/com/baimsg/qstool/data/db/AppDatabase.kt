@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.baimsg.qstool.data.db.converter.AppTypeConverters
 import com.baimsg.qstool.data.db.converter.BaseTypeConverters
+import com.baimsg.qstool.data.db.daos.CookieRecordDao
 import com.baimsg.qstool.data.models.entities.CookieRecord
 
 /**
@@ -20,5 +21,7 @@ import com.baimsg.qstool.data.models.entities.CookieRecord
     BaseTypeConverters::class, AppTypeConverters::class
 )
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun cookieRecordDao(): CookieRecordDao
 
 }
