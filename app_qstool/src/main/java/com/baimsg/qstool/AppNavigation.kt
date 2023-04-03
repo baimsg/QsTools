@@ -12,6 +12,7 @@ import com.baimsg.qstool.base.animation.fadeEnter
 import com.baimsg.qstool.base.animation.fadeExit
 import com.baimsg.qstool.base.animation.openEnter
 import com.baimsg.qstool.base.animation.openExit
+import com.baimsg.qstool.ui.change.ChangeScreen
 import com.baimsg.qstool.ui.home.HomeScreen
 import com.baimsg.qstool.ui.login.LoginScreen
 import com.baimsg.qstool.ui.me.MeScreen
@@ -22,6 +23,8 @@ import com.google.accompanist.navigation.animation.composable
  * Create by Baimsg on 2023/4/1
  *
  **/
+
+const val ROUTER_KEY_UIN = "uin"
 
 /**
  * 主页面封装
@@ -48,6 +51,9 @@ internal sealed class LeafScreen(
     object Home : LeafScreen("home")
     object Me : LeafScreen("me")
     object Login : LeafScreen("login")
+    object Change : LeafScreen("change/{$ROUTER_KEY_UIN}") {
+        fun createRoute(root: Screen, uin: Long): String = "${root.route}/change/$uin"
+    }
 }
 
 
@@ -83,6 +89,7 @@ private fun NavGraphBuilder.addHomeTopLevel(navController: NavController) {
     ) {
         addHome(navController, root)
         addLogin(navController, root)
+        addChange(navController, root)
     }
 }
 
@@ -101,6 +108,8 @@ private fun NavGraphBuilder.addHome(navController: NavController, root: Screen) 
     composable(route = LeafScreen.Home.createRoute(root)) {
         HomeScreen(openLoginScreen = {
             navController.navigate(LeafScreen.Login.createRoute(root))
+        }, openChangeScreen = {
+            navController.navigate(LeafScreen.Change.createRoute(root, it))
         })
     }
 }
@@ -109,6 +118,18 @@ private fun NavGraphBuilder.addHome(navController: NavController, root: Screen) 
 private fun NavGraphBuilder.addLogin(navController: NavController, root: Screen) {
     composable(route = LeafScreen.Login.createRoute(root)) {
         LoginScreen(onBack = {
+            navController.navigateUp()
+        })
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+private fun NavGraphBuilder.addChange(navController: NavController, root: Screen) {
+    composable(
+        route = LeafScreen.Change.createRoute(root),
+        arguments = listOf(navArgument(ROUTER_KEY_UIN) { type = NavType.LongType })
+    ) {
+        ChangeScreen(onBack = {
             navController.navigateUp()
         })
     }
@@ -165,7 +186,7 @@ private val NavDestination.hostNavGraph: NavGraph
 
 @ExperimentalAnimationApi
 private fun AnimatedContentScope<*>.defaultNutPopEnterTransition(
-    initial: NavBackStackEntry, target: NavBackStackEntry
+    initial: NavBackStackEntry, target: NavBackStackEntry,
 ): EnterTransition {
     val initialNavGraph = initial.destination.hostNavGraph
     val targetNavGraph = target.destination.hostNavGraph
@@ -178,7 +199,7 @@ private fun AnimatedContentScope<*>.defaultNutPopEnterTransition(
 
 @ExperimentalAnimationApi
 private fun AnimatedContentScope<*>.defaultNutPopExitTransition(
-    initial: NavBackStackEntry, target: NavBackStackEntry
+    initial: NavBackStackEntry, target: NavBackStackEntry,
 ): ExitTransition {
     val initialNavGraph = initial.destination.hostNavGraph
     val targetNavGraph = target.destination.hostNavGraph

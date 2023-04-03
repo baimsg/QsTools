@@ -62,7 +62,7 @@ fun View.bottomSheet(
     heightLimit: (maxHeight: Dp) -> Dp = { if (it < 640.dp) it - 40.dp else it * 0.85f },
     radius: Dp = 12.dp,
     background: Color = Color.White,
-    content: @Composable (IModal) -> Unit
+    content: @Composable (IModal) -> Unit,
 ): IModal {
     return animateModal(
         mask = Color.Transparent,
@@ -97,11 +97,12 @@ fun View.bottomSheet(
 @Composable
 fun BottomSheetList(
     modal: IModal,
+    modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    children: LazyListScope.(IModal) -> Unit
+    children: LazyListScope.(IModal) -> Unit,
 ) {
     LazyColumn(
-        state = state, modifier = Modifier.fillMaxWidth()
+        state = state, modifier = modifier.fillMaxWidth()
     ) {
         children(modal)
     }
@@ -131,7 +132,7 @@ fun AnimatedVisibilityScope.BottomSheet(
     background: Color = Color.White,
     mask: Color = DefaultMaskColor,
     modifier: Modifier,
-    content: @Composable (IModal) -> Unit
+    content: @Composable (IModal) -> Unit,
 ) {
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter
@@ -190,7 +191,7 @@ fun AnimatedVisibilityScope.BottomSheet(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun AnimatedVisibilityScope.NestScrollWrapper(
-    modal: IModal, modifier: Modifier, mask: Color, content: @Composable () -> Unit
+    modal: IModal, modifier: Modifier, mask: Color, content: @Composable () -> Unit,
 ) {
     val yOffsetState = remember {
         mutableStateOf(0f)
@@ -246,7 +247,7 @@ private class MutableHeight(var height: Float)
  * @param contentHeight 内容高度
  */
 private class BottomSheetNestedScrollConnection(
-    val modal: IModal, val yOffsetStateFlow: MutableState<Float>, val contentHeight: MutableHeight
+    val modal: IModal, val yOffsetStateFlow: MutableState<Float>, val contentHeight: MutableHeight,
 ) : NestedScrollConnection {
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -263,7 +264,7 @@ private class BottomSheetNestedScrollConnection(
     }
 
     override fun onPostScroll(
-        consumed: Offset, available: Offset, source: NestedScrollSource
+        consumed: Offset, available: Offset, source: NestedScrollSource,
     ): Offset {
         if (source == NestedScrollSource.Fling) {
             return Offset.Zero

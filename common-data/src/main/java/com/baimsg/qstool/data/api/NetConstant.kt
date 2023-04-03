@@ -24,4 +24,5 @@ object NetConstant {
      */
     const val YOUDAO_NOTE_URL = "https://note.youdao.com/"
 
+    const val ACCOUNTS_QQ = "https://accounts.qq.com/"
 }

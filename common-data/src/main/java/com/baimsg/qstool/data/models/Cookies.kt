@@ -1,6 +1,10 @@
 package com.baimsg.qstool.data.models
 
+import com.baimsg.qstool.utils.JSON
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encodeToString
 import java.io.Serializable
 
 /**
@@ -9,15 +13,31 @@ import java.io.Serializable
  **/
 @kotlinx.serialization.Serializable
 data class Cookies(
-    @SerialName("pgv_pvi") val pgvPvi: String = "",
-    @SerialName("pgvSi") val pgv_si: String = "",
+    val pgv_pvi: String = "",
+    val pgv_si: String = "",
     val RK: String = "",
     val uin: String = "",
-    @SerialName("pUin") val p_uin: String = "",
+    val p_uin: String = "",
     @SerialName("skey") val sKey: String = "",
     @SerialName("p_skey") val pSKey: String = "",
-    @SerialName("ptcz") val ptcZ: String = "",
-    @SerialName("pt4_token") val pt4Token: String = "",
+    val ptcz: String = "",
+    val pt4_token: String = "",
 ) : Serializable {
-    val qq: Long = Regex("\\d+").find(uin)?.value?.toLong() ?: 0
+
+    val qq: Long get() = Regex("\\d+").find(uin)?.value?.toLong() ?: 0
+
+
+    val headers: Map<String, String>
+        get() = JSON.decodeFromString(
+            MapSerializer(String.serializer(), String.serializer()), JSON.encodeToString(this)
+        )
+
+    val cookie: String
+        get() = buildString {
+            headers.forEach { (key, value) ->
+                if (isNotEmpty()) append("; ")
+                append("$key=$value")
+            }
+            append("; domainid=761")
+        }
 }

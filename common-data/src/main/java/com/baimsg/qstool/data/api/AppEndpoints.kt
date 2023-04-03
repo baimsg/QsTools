@@ -1,10 +1,9 @@
 package com.baimsg.qstool.data.api
 
 import com.baimsg.qstool.data.models.AppConfig
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.baimsg.qstool.data.models.CheckRisk
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * Create by Baimsg on 2023/4/3
@@ -57,6 +56,26 @@ interface AppEndpoints {
         @Query("editorType") editorType: Int = 1,
         @Query("editorVersion") editorVersion: String = "new-json-editor",
         @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.YOUDAO_NOTE_URL,
+    ): String
+
+
+    /**
+     * 检查账号是否存在风险
+     */
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chkrisk")
+    suspend fun chkRisk(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): CheckRisk
+
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/queryverifymethod")
+    suspend fun queryVerifyMethod(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
     ): String
 
 }
