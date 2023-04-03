@@ -380,11 +380,11 @@ object Dep {
             const val runtime = "androidx.room:room-runtime:$room_version"
             const val compiler = "androidx.room:room-compiler:$room_version"
             const val roomKtx = "androidx.room:room-ktx:$room_version"
-            const val roomRxjava2 = "androidx.room:room-rxjava2:$room_version"
-            const val roomRxjava3 = "androidx.room:room-rxjava3:$room_version"
-            const val roomGuava = "androidx.room:room-guava:$room_version"
-            const val roomTesting = "androidx.room:room-testing:$room_version"
-            const val roomPaging = "androidx.room:room-paging:$room_version"
+            const val rxjava2 = "androidx.room:room-rxjava2:$room_version"
+            const val rxjava3 = "androidx.room:room-rxjava3:$room_version"
+            const val guava = "androidx.room:room-guava:$room_version"
+            const val testing = "androidx.room:room-testing:$room_version"
+            const val paging = "androidx.room:room-paging:$room_version"
         }
 
         object SavedState {

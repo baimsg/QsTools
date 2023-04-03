@@ -4,6 +4,7 @@ import android.os.SystemClock
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
+import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.*
@@ -77,8 +78,8 @@ class ActivityHostModalProvider : ModalHostProvider {
     override fun provide(view: View): Pair<FrameLayout, OnBackPressedDispatcher> {
         val contentLayout = view.rootView.findViewById<FrameLayout>(Window.ID_ANDROID_CONTENT)
             ?: throw RuntimeException("View is not attached to Activity")
-        val activity = contentLayout.context as? AppCompatActivity
-            ?: throw RuntimeException("view's rootView's context is not AppCompatActivity")
+        val activity = contentLayout.context as? ComponentActivity
+            ?: throw RuntimeException("view's rootView's context is not ComponentActivity")
         return contentLayout to activity.onBackPressedDispatcher
     }
 }

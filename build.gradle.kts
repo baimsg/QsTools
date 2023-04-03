@@ -6,6 +6,7 @@ plugins {
     id("com.android.library") version "7.4.2" apply false
     kotlin("android") version "1.8.10" apply false
     kotlin("jvm") version "1.8.10" apply false
+    kotlin("plugin.serialization") version "1.8.10"
     id("com.google.dagger.hilt.android") version "2.43.2" apply false
 }
 

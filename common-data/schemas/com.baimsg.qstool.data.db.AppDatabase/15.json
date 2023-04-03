@@ -1,0 +1,58 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 15,
+    "identityHash": "2823a689903773a6e7b15645bd2ff3b0",
+    "entities": [
+      {
+        "tableName": "cookie_record",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uin` INTEGER NOT NULL, `login_time` INTEGER NOT NULL, `cookies` TEXT, `params` TEXT NOT NULL, `page` INTEGER NOT NULL, PRIMARY KEY(`uin`))",
+        "fields": [
+          {
+            "fieldPath": "uin",
+            "columnName": "uin",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loginTime",
+            "columnName": "login_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cookies",
+            "columnName": "cookies",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "params",
+            "columnName": "params",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "page",
+            "columnName": "page",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "uin"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2823a689903773a6e7b15645bd2ff3b0')"
+    ]
+  }
+}

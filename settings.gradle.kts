@@ -24,7 +24,7 @@ dependencyResolutionManagement {
 rootProject.name = "Qstool"
 includeBuild("./plugin")
 
-include(":app")
+include(":app_qstool")
 include(":base")
 include(":base-android")
 include(":ui-theme")

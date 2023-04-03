@@ -33,10 +33,10 @@ import androidx.compose.ui.zIndex
 import androidx.core.view.WindowInsetsCompat
 import com.baimsg.qstool.base.provider.dp
 import com.baimsg.qstool.base.provider.localQstoolWindowInsets
-import com.baimsg.qstool.ui.layout.PressWithAlphaBox
 import com.baimsg.qstool.ui.defaultScrollAlphaChangeMaxOffset
-import com.baimsg.qstool.ui.nutTopBarHeight
 import com.baimsg.qstool.ui.defaultTopBarZIndex
+import com.baimsg.qstool.ui.layout.PressWithAlphaBox
+import com.baimsg.qstool.ui.defaultTopBarHeight
 import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 
@@ -256,7 +256,7 @@ fun TopBarWithLazyScrollState(
     titleColor: Color = QstoolComposeThem.colors.topBarText,
     subTitle: CharSequence = "",
     alignTitleCenter: Boolean = true,
-    height: Dp = nutTopBarHeight,
+    height: Dp = defaultTopBarHeight,
     zIndex: Float = defaultTopBarZIndex,
     backgroundColor: Color = QstoolComposeThem.colors.topBarBackground,
     changeWithBackground: Boolean = false,
@@ -322,7 +322,7 @@ fun TopBar(
     titleColor: Color = QstoolComposeThem.colors.topBarText,
     subTitle: CharSequence = "",
     alignTitleCenter: Boolean = true,
-    height: Dp = nutTopBarHeight,
+    height: Dp = defaultTopBarHeight,
     zIndex: Float = defaultTopBarZIndex,
     backgroundColor: Color = QstoolComposeThem.colors.topBarBackground,
     shadowElevation: Dp = 16.dp,
@@ -404,7 +404,7 @@ fun TopBarContent(
     title: CharSequence,
     subTitle: CharSequence,
     alignTitleCenter: Boolean,
-    height: Dp = nutTopBarHeight,
+    height: Dp = defaultTopBarHeight,
     paddingStart: Dp = 4.dp,
     paddingEnd: Dp = 4.dp,
     titleBoxPaddingHor: Dp = 8.dp,
