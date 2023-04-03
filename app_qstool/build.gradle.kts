@@ -7,7 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
-
+    kotlin("plugin.serialization")
 }
 
 fun runCommand(project: Project, command: String): String {
@@ -136,6 +136,7 @@ dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.aar", "*.jar")))
     implementation(project(":base"))
     implementation(project(":base-android"))
+    implementation(project(":common-data"))
     implementation(project(":ui-resources"))
     implementation(project(":ui-theme"))
     implementation(project(":ui-components"))

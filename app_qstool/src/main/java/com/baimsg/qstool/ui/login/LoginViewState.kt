@@ -5,7 +5,7 @@ package com.baimsg.qstool.ui.login
  *
  **/
 data class LoginViewState(
-    val progress: Int = 0, val animateDuration: Int = 0
+    val progress: Int = 0, val animateDuration: Int = 0, val loginSuccessful: Boolean = false
 ) {
     companion object {
         val EMPTY = LoginViewState()

@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.baimsg.qstool.ui.resources.R
-import com.baimsg.qstool.utils.extensions.logD
-import com.baimsg.qstool.utils.extensions.logE
 import com.baimsg.qstool.utils.extensions.stateInDefault
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,23 +27,27 @@ internal class LoginViewModel @Inject constructor(app: Application) : ViewModel(
     private val _progress: MutableStateFlow<Int> = MutableStateFlow(0)
     private val _animateDuration: MutableStateFlow<Int> = MutableStateFlow(200)
 
+    private val _loginSuccessful: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     private val _pendingActions = MutableSharedFlow<LoginAction>()
 
-    val loginViewState = combine(_progress, _animateDuration, ::LoginViewState).apply {
-        logD(this)
-    }.stateInDefault(
-        viewModelScope, LoginViewState.EMPTY
-    )
+    val loginViewState =
+        combine(_progress, _animateDuration, _loginSuccessful, ::LoginViewState).stateInDefault(
+            viewModelScope, LoginViewState.EMPTY
+        )
 
     init {
         viewModelScope.launch {
             _pendingActions.collectLatest { action ->
                 when (action) {
-                    is LoginAction.SendProgress -> {
+                    is LoginAction.UpdateProgress -> {
                         if (action.progress != _progress.value) {
                             _progress.value = action.progress
                             _animateDuration.value = action.animateDuration
                         }
+                    }
+                    is LoginAction.LoginSuccessful -> {
+
                     }
                 }
             }

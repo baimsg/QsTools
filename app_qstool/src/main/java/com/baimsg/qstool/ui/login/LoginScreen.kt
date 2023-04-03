@@ -4,41 +4,37 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
-import android.webkit.CookieManager
-import android.webkit.SslErrorHandler
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
+import android.webkit.*
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalView
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.baimsg.qstool.base.utils.centeredToast
 import com.baimsg.qstool.base.utils.rememberFlowWithLifecycle
 import com.baimsg.qstool.ui.components.TopBar
 import com.baimsg.qstool.ui.components.TopBarBackIconItem
 import com.baimsg.qstool.ui.components.TopBarIconItem
+import com.baimsg.qstool.ui.modal.toast
+import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
 import com.baimsg.qstool.ui.web.setDefaultSettings
+import com.baimsg.qstool.utils.extensions.isNotNullAndNotBlank
 import com.baimsg.qstool.utils.extensions.logE
 import com.google.accompanist.web.AccompanistWebChromeClient
 import com.google.accompanist.web.AccompanistWebViewClient
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
-import com.baimsg.qstool.ui.resources.R
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 /**
  * Create by Baimsg on 2023/3/31
@@ -60,7 +56,7 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
         )
     )
 
-    val context = LocalContext.current
+    val view = LocalView.current
 
     val webViewState = rememberWebViewState(url = viewModel.url)
     Column(Modifier.fillMaxSize()) {
@@ -95,7 +91,7 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
                 super.onPageStarted(view, url, favicon)
                 if (state.progress < 30) {
                     viewModel.submitAction(
-                        loginAction = LoginAction.SendProgress(
+                        loginAction = LoginAction.UpdateProgress(
                             progress = 30, animateDuration = 500
                         )
                     )
@@ -130,13 +126,25 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
             }
 
             override fun onLoadResource(view: WebView?, url: String?) {
-                logE("onLoadResource -> $url")
-                url?.let {
-                    if (it.toUri().path == "/webviewCanScroll") {
-                        logE(CookieManager.getInstance().getCookie("https://ui.ptlogin2.qq.com") ?: "")
-                        context.centeredToast("登录成功")
+                if (!url?.toUri()?.getQueryParameters("bkn").isNullOrEmpty()) {
+                    val cookies =
+                        CookieManager.getInstance().getCookie("https://accounts.qq.com") ?: ""
+                    if (cookies.isNotNullAndNotBlank()) {
+                        buildJsonObject {
+                            cookies.split("; ").forEachIndexed { index, s ->
+                                val values = s.split("=")
+                                put(values.first(), values.last())
+                            }
+                        }.apply {
+                            logE(this)
+                        }
+
+                        view?.toast("登录成功")
+                    } else {
+                        view?.toast("获取cookies失败")
                     }
                 }
+
                 super.onLoadResource(view, url)
             }
 
@@ -145,7 +153,7 @@ internal fun LoginScreen(onBack: () -> Unit, viewModel: LoginViewModel) {
                 super.onProgressChanged(view, newProgress)
                 if (newProgress > state.progress) {
                     viewModel.submitAction(
-                        loginAction = LoginAction.SendProgress(
+                        loginAction = LoginAction.UpdateProgress(
                             progress = newProgress, animateDuration = 100
                         )
                     )
