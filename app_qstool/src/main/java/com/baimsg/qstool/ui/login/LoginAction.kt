@@ -14,12 +14,23 @@ internal sealed class LoginAction {
      * @param animateDuration 动画时间
      */
     class UpdateProgress(
-        val progress: Int, val animateDuration: Int
+        val progress: Int, val animateDuration: Int,
     ) : LoginAction()
 
     /**
      * 登录成功
-     * @param cookies
+     * @param cookies 获取到的cookie
      */
     class LoginSuccessful(val cookies: Cookies) : LoginAction()
+
+    /**
+     * 刷新网页
+     */
+    object Refresh : LoginAction()
+
+    /**
+     * 更新标题
+     * @param title 标题
+     */
+    class UpdateTitle(val title: String) : LoginAction()
 }

@@ -1,38 +1,49 @@
 package com.baimsg.qstool.ui.me
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Create by Baimsg on 2023/4/1
  *
  **/
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 internal fun MeScreen() {
+    val scaffoldState = rememberScaffoldState()
+
+    var showSnack by remember {
+        mutableStateOf(false)
+    }
+
+    val currentShow by rememberUpdatedState(newValue = showSnack)
+
+    LaunchedEffect(key1 = currentShow) {
+        scaffoldState.snackbarHostState.showSnackbar(
+            message = "我是一个Snack", actionLabel = "哦"
+        )
+    }
+
+
+
     Column(Modifier.fillMaxSize()) {
-        LazyColumn(
-            Modifier
-                .fillMaxWidth()
-                .height(0.dp)
-                .weight(15f),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            repeat(100) {
-                item {
-                    Text(text = "数据数据数据数据数据数据数据数据数据$it")
+        Scaffold(scaffoldState = scaffoldState) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = { showSnack = !showSnack }) {
+                    Text("LaunchedEffect")
                 }
             }
-        }
-        Button(modifier = Modifier
-            .height(0.dp)
-            .weight(0.1f), onClick = { /*T\ODO*/ }) {
-            Text(text = "取消")
         }
     }
 }

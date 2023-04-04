@@ -1,10 +1,8 @@
 package com.baimsg.qstool.ui.home
 
 import android.view.View
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -16,7 +14,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.baimsg.qstool.AppViewModelStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.baimsg.qstool.base.utils.rememberFlowWithLifecycle
 import com.baimsg.qstool.base.utils.toast
 import com.baimsg.qstool.data.models.entities.CookieRecord
@@ -37,7 +35,7 @@ internal fun HomeScreen(openLoginScreen: () -> Unit, openChangeScreen: (Long) ->
     HomeScreen(
         openLoginScreen = openLoginScreen,
         openChangeScreen = openChangeScreen,
-        viewModel = AppViewModelStore.instance().viewModels()
+        viewModel = hiltViewModel()
     )
 }
 

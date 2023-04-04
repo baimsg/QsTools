@@ -32,7 +32,7 @@ internal abstract class ModalPresent(
     private val onBackPressedDispatcher: OnBackPressedDispatcher,
     val mask: Color = DefaultMaskColor,
     val systemCancellable: Boolean = true,
-    val maskTouchBehavior: MaskTouchBehavior = MaskTouchBehavior.dismiss
+    val maskTouchBehavior: MaskTouchBehavior = MaskTouchBehavior.dismiss,
 ) : IModal {
     /**
      * 展示监听器列表
@@ -173,7 +173,7 @@ internal class StillModalImpl(
     mask: Color = DefaultMaskColor,
     systemCancellable: Boolean = true,
     maskTouchBehavior: MaskTouchBehavior = MaskTouchBehavior.dismiss,
-    val content: @Composable (modal: IModal) -> Unit
+    val content: @Composable (modal: IModal) -> Unit,
 ) : ModalPresent(rootLayout, onBackPressedDispatcher, mask, systemCancellable, maskTouchBehavior) {
     @Composable
     override fun ModalContent(visible: Boolean, dismissFinishAction: () -> Unit) {
@@ -194,7 +194,6 @@ internal class StillModalImpl(
                 }
             })
             content(this)
-        } else {
             DisposableEffect("") {
                 onDispose {
                     dismissFinishAction()
@@ -223,7 +222,7 @@ internal class AnimateModalImpl(
     maskTouchBehavior: MaskTouchBehavior = MaskTouchBehavior.dismiss,
     val enter: EnterTransition = fadeIn(tween(), 0f),
     val exit: ExitTransition = fadeOut(tween(), 0f),
-    val content: @Composable AnimatedVisibilityScope.(modal: IModal) -> Unit
+    val content: @Composable AnimatedVisibilityScope.(modal: IModal) -> Unit,
 ) : ModalPresent(
     rootLayout, onBackPressedDispatcher, mask, systemCancellable, maskTouchBehavior
 ) {

@@ -68,7 +68,6 @@ class AccountsDataResource @Inject constructor(
         return base and 2147483647
     }
 
-
     private fun qqZone(sKey: String): Int {
         var hash = 5381
         sKey.forEachIndexed { _, c ->
