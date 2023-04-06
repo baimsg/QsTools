@@ -1,7 +1,6 @@
 package com.baimsg.qstool.data.api
 
-import com.baimsg.qstool.data.models.AppConfig
-import com.baimsg.qstool.data.models.CheckRisk
+import com.baimsg.qstool.data.models.*
 import okhttp3.RequestBody
 import retrofit2.http.*
 
@@ -58,6 +57,21 @@ interface AppEndpoints {
         @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.YOUDAO_NOTE_URL,
     ): String
 
+    @POST("proxy/domain/qq110.qq.com/v3/querymbphonestat")
+    suspend fun queryMbPhoneStat(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): MbPhoneState
+
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/querymbphone")
+    suspend fun queryMbPhone(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): MbPhoneInfo
 
     /**
      * 检查账号是否存在风险
@@ -70,12 +84,59 @@ interface AppEndpoints {
         @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
     ): CheckRisk
 
+    /**
+     * 获取验证方法
+     */
     @POST("phone/verify/proxy/domain/qq110.qq.com/v3/queryverifymethod")
     suspend fun queryVerifyMethod(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
         @HeaderMap headers: Map<String, String>,
         @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
-    ): String
+    ): VerifyMethod
+
+    /**
+     * 获取验证码
+     */
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/getsms")
+    suspend fun getSms(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): SmsInfo
+
+    /**
+     * 校验验证码
+     */
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chksms")
+    suspend fun chkSms(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): CheckSms
+
+    /**
+     * 验证手机号是否合法
+     */
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/verifymbphone")
+    suspend fun verifyMbPhone(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): VerifyMbPhone
+
+    /**
+     * 换绑
+     */
+    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chgmbphone")
+    suspend fun changeMbPhone(
+        @Query("bkn") bkn: Int,
+        @Body requestBody: RequestBody,
+        @HeaderMap headers: Map<String, String>,
+        @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
+    ): ChangeMbPhone
 
 }

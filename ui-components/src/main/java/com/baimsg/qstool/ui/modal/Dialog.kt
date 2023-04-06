@@ -61,7 +61,7 @@ fun Dialog(
     widthLimit: Dp = 360.dp,
     radius: Dp = 2.dp,
     background: Color = Color.White,
-    content: @Composable (IModal) -> Unit
+    content: @Composable (IModal) -> Unit,
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -95,12 +95,12 @@ fun Dialog(
  */
 @Composable
 fun DialogActions(
-    modal: IModal, actions: List<ModalAction>
+    modal: IModal, actions: List<ModalAction>,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 6.dp, end = 6.dp, bottom = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.End
     ) {
         actions.forEach {
@@ -130,10 +130,10 @@ fun DialogAction(
     color: Color = defaultPrimaryColor,
     fontWeight: FontWeight? = FontWeight.Bold,
     fontFamily: FontFamily? = null,
-    paddingVer: Dp = 9.dp,
-    paddingHor: Dp = 14.dp,
+    paddingVer: Dp = 0.dp,
+    paddingHor: Dp = 16.dp,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed = interactionSource.collectIsPressedAsState()
@@ -163,7 +163,7 @@ fun DialogAction(
  */
 @Composable
 fun DialogMsg(
-    modal: IModal, title: String, content: String, actions: List<ModalAction>
+    modal: IModal, title: String, content: String, actions: List<ModalAction>,
 ) {
     Column {
         DialogTitle(text = title)
@@ -199,7 +199,8 @@ fun DialogTitle(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                top = 24.dp,
+                top = DefaultDialogPaddingHor,
+                bottom = DefaultDialogPaddingHor,
                 start = DefaultDialogPaddingHor,
                 end = DefaultDialogPaddingHor,
             ),
@@ -269,7 +270,7 @@ fun DialogList(
     maxHeight: Dp = Dp.Unspecified,
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(vertical = 8.dp),
-    children: LazyListScope.(IModal) -> Unit
+    children: LazyListScope.(IModal) -> Unit,
 ) {
     LazyColumn(
         state = state,
@@ -313,7 +314,7 @@ fun DialogMarkList(
     itemTextFontFamily: FontFamily? = null,
     itemMarkTintColor: Color = defaultPrimaryColor,
     contentPadding: PaddingValues = PaddingValues(vertical = 8.dp),
-    onItemClick: (modal: IModal, index: Int) -> Unit
+    onItemClick: (modal: IModal, index: Int) -> Unit,
 ) {
     DialogList(
         modal = modal, maxHeight = maxHeight, state = state, contentPadding = contentPadding
@@ -362,7 +363,7 @@ fun DialogMultipleCheckList(
     itemCheckNormalTint: Color = defaultSeparatorColor,
     itemCheckCheckedTint: Color = defaultPrimaryColor,
     contentPadding: PaddingValues = PaddingValues(vertical = 8.dp),
-    onItemClick: (modal: IModal, index: Int) -> Unit
+    onItemClick: (modal: IModal, index: Int) -> Unit,
 ) {
     DialogList(
         modal = modal, maxHeight = maxHeight, state = state, contentPadding = contentPadding
@@ -416,7 +417,7 @@ fun View.dialog(
     widthLimit: Dp = 360.dp,
     radius: Dp = 12.dp,
     background: Color = Color.White,
-    content: @Composable (IModal) -> Unit
+    content: @Composable (IModal) -> Unit,
 ): IModal {
     return animateModal(
         mask,
@@ -440,7 +441,7 @@ fun View.stillDialog(
     widthLimit: Dp = 360.dp,
     radius: Dp = 12.dp,
     background: Color = Color.White,
-    content: @Composable (IModal) -> Unit
+    content: @Composable (IModal) -> Unit,
 ): IModal {
     return stillModal(
         mask, systemCancellable, maskTouchBehavior, modalHostProvider = modalHostProvider

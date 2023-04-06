@@ -12,7 +12,7 @@ val defaultTextDescColor = Color(0xFF666666)
 
 val defaultTopBarHeight = 48.dp
 const val defaultTopBarZIndex = 32f
-val defaultCommonHorSpace = 20.dp
+val defaultCommonHorSpace = 12.dp
 val defaultScrollAlphaChangeMaxOffset = 20.dp
 
 

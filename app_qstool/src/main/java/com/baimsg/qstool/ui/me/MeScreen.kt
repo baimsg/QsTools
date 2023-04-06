@@ -24,11 +24,14 @@ internal fun MeScreen() {
 
     val currentShow by rememberUpdatedState(newValue = showSnack)
 
-    LaunchedEffect(key1 = currentShow) {
-        scaffoldState.snackbarHostState.showSnackbar(
-            message = "我是一个Snack", actionLabel = "哦"
-        )
+    if (currentShow) {
+        LaunchedEffect(key1 = Unit) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = "我是一个Snack", actionLabel = "哦"
+            )
+        }
     }
+
 
 
 

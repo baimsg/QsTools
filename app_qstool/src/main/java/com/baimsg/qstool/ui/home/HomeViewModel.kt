@@ -15,7 +15,7 @@ import javax.inject.Inject
  *
  **/
 @HiltViewModel
-class HomeViewModel @Inject constructor(val cookieDataResource: CookieDataResource) : ViewModel() {
+class HomeViewModel @Inject constructor(private val cookieDataResource: CookieDataResource) : ViewModel() {
 
     private val pendingAction: MutableSharedFlow<HomeAction> = MutableSharedFlow()
 

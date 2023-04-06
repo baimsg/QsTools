@@ -101,10 +101,13 @@ internal fun LoginScreen(
      * 登录成功
      */
     if (state.loginSuccessful) {
+        val background = QstoolComposeThem.colors.topBarBackground
+        val textColor = QstoolComposeThem.colors.topBarText
         LaunchedEffect(Unit) {
-            view.stillToast("登录成功").doOnDismiss {
-                onBack()
-            }
+            view.stillToast(text = "登录成功", background = background, textColor = textColor)
+                .doOnDismiss {
+                    onBack()
+                }
         }
     }
 

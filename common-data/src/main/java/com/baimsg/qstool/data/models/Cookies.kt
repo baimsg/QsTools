@@ -27,17 +27,26 @@ data class Cookies(
     val qq: Long get() = Regex("\\d+").find(uin)?.value?.toLong() ?: 0
 
 
-    val headers: Map<String, String>
+    val cookies: Map<String, String>
         get() = JSON.decodeFromString(
             MapSerializer(String.serializer(), String.serializer()), JSON.encodeToString(this)
         )
 
     val cookie: String
         get() = buildString {
-            headers.forEach { (key, value) ->
+            cookies.forEach { (key, value) ->
                 if (isNotEmpty()) append("; ")
                 append("$key=$value")
             }
             append("; domainid=761")
         }
+
+    val defaultHeaders: Map<String, String>
+        get() = mapOf(
+            "qname-service" to "1935233:65536",
+            "qname-space" to "Production",
+            "origin" to "https://accounts.qq.com",
+            "referer" to "https://accounts.qq.com/phone/verify",
+            "Cookie" to cookie
+        )
 }

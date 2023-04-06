@@ -2,7 +2,7 @@ package com.baimsg.qstool.data.domain.repositories
 
 import com.baimsg.qstool.base.CoroutineDispatchers
 import com.baimsg.qstool.data.api.AppEndpoints
-import com.baimsg.qstool.data.models.Cookies
+import com.baimsg.qstool.data.models.*
 import com.baimsg.qstool.utils.extensions.resultApiCall
 import com.baimsg.qstool.utils.extensions.toRequestBody
 import kotlinx.serialization.json.buildJsonObject
@@ -18,7 +18,44 @@ class AccountsDataResource @Inject constructor(
     private val appEndpoints: AppEndpoints,
     private val dispatchers: CoroutineDispatchers,
 ) {
-    suspend fun chkRisk(cookies: Cookies) = resultApiCall(dispatchers.network) {
+
+    /**
+     * 获取手机号状态
+     * @param cookies 登录信息
+     */
+    suspend fun queryMbPhoneStat(cookies: Cookies): Result<MbPhoneState> =
+        resultApiCall(dispatchers.network) {
+            appEndpoints.queryMbPhoneStat(
+                bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                    put("com", buildJsonObject {
+                        put("src", 2)
+                        put("scene", 251)
+                        put("platform", 6)
+                        put("version", "100")
+                    })
+                }.toRequestBody(), headers = cookies.defaultHeaders
+            )
+        }
+
+    suspend fun queryMbPhone(cookies: Cookies): Result<MbPhoneInfo> =
+        resultApiCall(dispatchers.network) {
+            appEndpoints.queryMbPhone(
+                bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                    put("com", buildJsonObject {
+                        put("src", 2)
+                        put("scene", 551)
+                        put("platform", 6)
+                        put("version", "100")
+                    })
+                }.toRequestBody(), headers = cookies.defaultHeaders
+            )
+        }
+
+    /**
+     * 检查账号是否安全
+     * @param cookies 登录信息
+     */
+    suspend fun chkRisk(cookies: Cookies): Result<CheckRisk> = resultApiCall(dispatchers.network) {
         appEndpoints.chkRisk(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
@@ -27,17 +64,14 @@ class AccountsDataResource @Inject constructor(
                     put("platform", 6)
                     put("version", "100")
                 })
-            }.toRequestBody(), headers = mapOf(
-                "qname-service" to "1935233:65536",
-                "qname-space" to "Production",
-                "origin" to "https://accounts.qq.com",
-                "referer" to "https://accounts.qq.com/phone/verify",
-                "Cookie" to cookies.cookie
-            )
+            }.toRequestBody(), headers = cookies.defaultHeaders
         )
     }
 
-    suspend fun queryVerifyMethod(riskTicket: String, cookies: Cookies): Result<String> =
+    /**
+     * 获取验证方式
+     */
+    suspend fun queryVerifyMethod(riskTicket: String, cookies: Cookies): Result<VerifyMethod> =
         resultApiCall(dispatchers.network) {
             appEndpoints.queryVerifyMethod(
                 bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
@@ -50,15 +84,103 @@ class AccountsDataResource @Inject constructor(
                     put("nonce", Random(9999999).nextInt())
                     put("faceAppid", 101966366)
                     put("riskTicket", riskTicket)
-                }.toRequestBody(), headers = mapOf(
-                    "qname-service" to "1935233:65536",
-                    "qname-space" to "Production",
-                    "origin" to "https://accounts.qq.com",
-                    "referer" to "https://accounts.qq.com/phone/verify",
-                    "Cookie" to cookies.cookie
-                )
+                }.toRequestBody(), headers = cookies.defaultHeaders
             )
         }
+
+    /**
+     * 获取验证码
+     */
+    suspend fun getSms(
+        way: Int,
+        areaCode: String,
+        mobile: String,
+        cookies: Cookies,
+    ): Result<SmsInfo> = resultApiCall(dispatchers.network) {
+        appEndpoints.getSms(
+            bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                put("com", buildJsonObject {
+                    put("src", 2)
+                    put("scene", 351)
+                    put("platform", 6)
+                    put("version", "100")
+                })
+                put("way", way)
+                put("areaCode", areaCode)
+                put("mobile", mobile)
+            }.toRequestBody(), headers = cookies.defaultHeaders
+        )
+    }
+
+    /**
+     * 验证短信
+     */
+    suspend fun checkSms(
+        way: Int,
+        areaCode: String,
+        mobile: String,
+        sms: String,
+        cookies: Cookies,
+    ): Result<CheckSms> = resultApiCall(dispatchers.network) {
+        appEndpoints.chkSms(
+            bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                put("com", buildJsonObject {
+                    put("src", 2)
+                    put("scene", 351)
+                    put("platform", 6)
+                    put("version", "100")
+                })
+                put("way", way)
+                put("areaCode", areaCode)
+                put("mobile", mobile)
+                put("sms", sms)
+            }.toRequestBody(), headers = cookies.defaultHeaders
+        )
+    }
+
+    /**
+     * 验证手机号
+     */
+    suspend fun verifyMbPhone(
+        areaCode: String,
+        mobile: String,
+        cookies: Cookies,
+    ): Result<VerifyMbPhone> = resultApiCall(dispatchers.network) {
+        appEndpoints.verifyMbPhone(
+            bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                put("com", buildJsonObject {
+                    put("src", 2)
+                    put("scene", 951)
+                    put("platform", 6)
+                    put("version", "100")
+                })
+                put("areaCode", areaCode)
+                put("mobile", mobile)
+            }.toRequestBody(), headers = cookies.defaultHeaders
+        )
+    }
+
+    /**
+     * 换绑
+     */
+    suspend fun changeMbPhone(
+        areaCode: String,
+        mobile: String,
+        cookies: Cookies,
+    ): Result<ChangeMbPhone> = resultApiCall(dispatchers.network) {
+        appEndpoints.changeMbPhone(
+            bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                put("com", buildJsonObject {
+                    put("src", 2)
+                    put("scene", 951)
+                    put("platform", 6)
+                    put("version", "100")
+                })
+                put("areaCode", areaCode)
+                put("mobile", mobile)
+            }.toRequestBody(), headers = cookies.defaultHeaders
+        )
+    }
 
     private fun getBkn(sKey: String): Int {
         var base = 5381
