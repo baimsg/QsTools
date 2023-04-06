@@ -5,8 +5,7 @@ package com.baimsg.qstool.data.models
  *
  **/
 @kotlinx.serialization.Serializable
-data class PhoneInfo(
-    val way: Int = 0,
+data class AreaCode(
+    val nationName: String = "",
     val areaCode: String = "",
-    val phoneNum: String = "",
-) {}
+)

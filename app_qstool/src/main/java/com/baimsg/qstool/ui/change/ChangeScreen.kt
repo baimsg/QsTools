@@ -1,8 +1,11 @@
 package com.baimsg.qstool.ui.change
 
+import android.view.View
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -11,19 +14,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.baimsg.qstool.base.utils.rememberFlowWithLifecycle
 import com.baimsg.qstool.data.InvokeFail
-import com.baimsg.qstool.data.InvokeLading
+import com.baimsg.qstool.data.InvokeFinish
+import com.baimsg.qstool.data.InvokeLoading
 import com.baimsg.qstool.data.InvokeSuccess
+import com.baimsg.qstool.data.models.AreaCode
 import com.baimsg.qstool.data.models.PhoneInfo
 import com.baimsg.qstool.ui.components.*
 import com.baimsg.qstool.ui.ex.drawBottomSeparator
+import com.baimsg.qstool.ui.ex.drawTopSeparator
 import com.baimsg.qstool.ui.modal.*
 import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
@@ -54,16 +62,18 @@ internal fun ChangeScreen(
 
     val view = LocalView.current
 
-    val background = QstoolComposeThem.colors.bottomBar
-
     val invokeStatus = state.invokeStatus
+
+    val phoneInfo = state.phoneInfo
+
+    val background = QstoolComposeThem.colors.bottomBar
 
     val iconColor = QstoolComposeThem.colors.iconCurrent
 
     val textColor = QstoolComposeThem.colors.textPrimary
 
     when (invokeStatus) {
-        is InvokeLading -> {
+        is InvokeLoading -> {
             val msg = rememberUpdatedState(newValue = invokeStatus.msg)
             DisposableEffect(Unit) {
                 val dialog = view.dialog(
@@ -99,10 +109,15 @@ internal fun ChangeScreen(
                 view.toast(msg.value)
             }
         }
+        is InvokeFinish -> {
+            val msg = rememberUpdatedState(newValue = invokeStatus.msg)
+            LaunchedEffect(Unit) {
+                view.toast(msg.value)
+            }
+        }
         is InvokeSuccess -> Unit
         else -> Unit
     }
-
 
     Column(
         Modifier
@@ -119,20 +134,24 @@ internal fun ChangeScreen(
             item(key = 0) {
                 HeardItem(uin = state.uin)
             }
-            if (invokeStatus is InvokeFail) {
-                item(key = 1) {
-                    Retry(executor = executor)
-                }
+            if (phoneInfo.way == 1) item(key = 1) {
+                InputPhoneNum(
+                    view = view,
+                    phoneInfo = phoneInfo,
+                    areaCodeList = state.areaCodeList,
+                    executor = executor
+                )
             }
-            if (invokeStatus is InvokeSuccess) {
-                item(key = 2) {
-                    VerifyCodeItem(
-                        verifyCode = state.verifyCode,
-                        mbPhoneInfo = state.phoneInfo,
-                        state.timeOut,
-                        executor = executor
-                    )
-                }
+            if (phoneInfo.way == 3 || phoneInfo.way == 2) item(key = 2) {
+                VerifyCodeItem(
+                    verifyCode = state.verifyCode,
+                    phoneInfo = phoneInfo,
+                    state.timeOut,
+                    executor = executor
+                )
+            }
+            if (invokeStatus is InvokeFail) item(key = 3) {
+                Retry(executor = executor)
             }
         }
     }
@@ -143,12 +162,12 @@ internal fun ChangeScreen(
 internal fun HeardItem(uin: Long) {
     Row(
         Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 16.dp)
             .drawBehind {
                 drawBottomSeparator(insetStart = 12.dp, insetEnd = 12.dp)
-            }, verticalAlignment = Alignment.CenterVertically
-    ) {
+            }
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically) {
         CoverImage(
             data = "https://q.qlogo.cn/g?b=qq&nk=${uin}&s=100",
             size = 48.dp,
@@ -159,14 +178,56 @@ internal fun HeardItem(uin: Long) {
 }
 
 @Composable
-internal fun Retry(executor: (ChangeAction) -> Unit) {
-    Box(
-        modifier = Modifier
+internal fun InputPhoneNum(
+    view: View,
+    phoneInfo: PhoneInfo,
+    areaCodeList: List<AreaCode>,
+    executor: (ChangeAction) -> Unit,
+) {
+    val background = QstoolComposeThem.colors.bottomBar
+    val textColor = QstoolComposeThem.colors.textPrimary
+    Column(
+        Modifier
+            .padding(horizontal = 12.dp)
             .fillMaxWidth()
-            .padding(12.dp), contentAlignment = Alignment.Center
+            .padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
-        DialogAction(text = "重试", color = QstoolComposeThem.colors.iconCurrent) {
-            executor(ChangeAction.Retry)
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            DialogAction(
+                text = phoneInfo.areaCode,
+                color = QstoolComposeThem.colors.iconCurrent,
+                fontSize = 16.sp
+            ) {
+                showAreaCode(
+                    view = view,
+                    background = background,
+                    textColor = textColor,
+                    phoneInfo = phoneInfo,
+                    areaCodeList = areaCodeList,
+                    executor = executor
+                )
+            }
+            VerifyCodeTextField(modifier = Modifier
+                .width(0.dp)
+                .weight(3f),
+                value = phoneInfo.phoneNum,
+                hint = "请输入手机号",
+                onValueChange = {
+                    executor(ChangeAction.InputPhoneNum(it))
+                })
+        }
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp), contentAlignment = Alignment.Center
+        ) {
+            DialogAction(
+                text = "下一步", color = QstoolComposeThem.colors.iconCurrent
+            ) {
+                executor(ChangeAction.VerifyPhone)
+            }
         }
     }
 
@@ -175,7 +236,7 @@ internal fun Retry(executor: (ChangeAction) -> Unit) {
 @Composable
 internal fun VerifyCodeItem(
     verifyCode: String,
-    mbPhoneInfo: PhoneInfo,
+    phoneInfo: PhoneInfo,
     timeOut: Int,
     executor: (ChangeAction) -> Unit,
 ) {
@@ -186,7 +247,7 @@ internal fun VerifyCodeItem(
             .padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
         Item(
-            title = "通过手机号 ${mbPhoneInfo.areaCode} ${mbPhoneInfo.phoneNum} 接收短信验证码",
+            title = "通过手机号 ${phoneInfo.areaCode} ${phoneInfo.phoneNum} 接收短信验证码",
             titleColor = QstoolComposeThem.colors.textPrimary,
             paddingHor = 0.dp
         )
@@ -225,10 +286,67 @@ internal fun VerifyCodeItem(
                 .padding(vertical = 16.dp),
             contentAlignment = Alignment.Center
         ) {
-            DialogAction(text = "下一步", color = QstoolComposeThem.colors.iconCurrent) {
+            DialogAction(
+                text = if (phoneInfo.way == 3) "下一步" else "换绑手机",
+                enabled = verifyCode.length >= 6,
+                color = QstoolComposeThem.colors.iconCurrent
+            ) {
                 executor(ChangeAction.CheckSms)
             }
         }
     }
+}
 
+@Composable
+internal fun Retry(executor: (ChangeAction) -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp), contentAlignment = Alignment.Center
+    ) {
+        DialogAction(text = "重试", color = QstoolComposeThem.colors.iconCurrent) {
+            executor(ChangeAction.Retry)
+        }
+    }
+}
+
+fun showAreaCode(
+    view: View,
+    background: Color,
+    textColor: Color,
+    phoneInfo: PhoneInfo,
+    areaCodeList: List<AreaCode>,
+    executor: (ChangeAction) -> Unit,
+) {
+    view.bottomSheet(background = background) {
+        Column {
+            BottomSheetList(it, modifier = Modifier
+                .heightIn(0.dp, 600.dp)
+                .drawBehind {
+                    drawTopSeparator()
+                    drawBottomSeparator()
+                }) {
+                itemsIndexed(areaCodeList) { _, areaCode ->
+                    Item(title = "${areaCode.areaCode} ${areaCode.nationName}",
+                        paddingVer = 18.dp,
+                        titleColor = textColor,
+                        drawBehind = {
+                            drawBottomSeparator()
+                        },
+                        accessory = {
+                            if (phoneInfo.areaCode == areaCode.areaCode) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_mark),
+                                    contentDescription = "勾选"
+                                )
+                            }
+                        }) {
+                        executor(ChangeAction.SelectAreaCode(areaCode.areaCode))
+                        it.dismiss()
+                    }
+                }
+            }
+        }
+
+    }.show()
 }

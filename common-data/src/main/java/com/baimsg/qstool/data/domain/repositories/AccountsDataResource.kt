@@ -116,9 +116,7 @@ class AccountsDataResource @Inject constructor(
      * 验证短信
      */
     suspend fun checkSms(
-        way: Int,
-        areaCode: String,
-        mobile: String,
+        phoneInfo: PhoneInfo,
         sms: String,
         cookies: Cookies,
     ): Result<CheckSms> = resultApiCall(dispatchers.network) {
@@ -130,9 +128,9 @@ class AccountsDataResource @Inject constructor(
                     put("platform", 6)
                     put("version", "100")
                 })
-                put("way", way)
-                put("areaCode", areaCode)
-                put("mobile", mobile)
+                put("way", phoneInfo.way)
+                put("areaCode", phoneInfo.areaCode)
+                put("mobile", phoneInfo.phoneNum)
                 put("sms", sms)
             }.toRequestBody(), headers = cookies.defaultHeaders
         )
@@ -164,20 +162,36 @@ class AccountsDataResource @Inject constructor(
      * 换绑
      */
     suspend fun changeMbPhone(
-        areaCode: String,
-        mobile: String,
+        phoneInfo: PhoneInfo,
+        type: Int = 0,
+        checkSmsList: List<CheckSms>,
         cookies: Cookies,
     ): Result<ChangeMbPhone> = resultApiCall(dispatchers.network) {
         appEndpoints.changeMbPhone(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
                     put("src", 2)
-                    put("scene", 951)
+                    put("scene", 251)
                     put("platform", 6)
                     put("version", "100")
                 })
-                put("areaCode", areaCode)
-                put("mobile", mobile)
+                put("type", type)
+                put("ticket", buildJsonObject {
+                    put("ticket0", buildJsonObject {
+                        val checkSms = checkSmsList.first { it.way == 3 }
+                        put("way", checkSms.way)
+                        put("keyType", checkSms.keyType)
+                        put("key", checkSms.key)
+                    })
+                })
+                put("areaCode", phoneInfo.areaCode)
+                put("mobile", phoneInfo.phoneNum)
+                checkSmsList.first { it.way == 2 }.let { checkSms ->
+                    put("way", checkSms.way)
+                    put("keyType", checkSms.keyType)
+                    put("key", checkSms.key)
+                }
+
             }.toRequestBody(), headers = cookies.defaultHeaders
         )
     }

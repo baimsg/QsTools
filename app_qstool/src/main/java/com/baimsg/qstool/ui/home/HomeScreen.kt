@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,7 +31,6 @@ import com.baimsg.qstool.ui.ex.drawTopSeparator
 import com.baimsg.qstool.ui.modal.*
 import com.baimsg.qstool.ui.resources.R
 import com.baimsg.qstool.ui.theme.QstoolComposeThem
-import com.baimsg.qstool.ui.theme.Shapes
 
 /**
  * Create by Baimsg on 2023/4/1
@@ -151,7 +151,7 @@ fun showCookieRecord(
                             CoverImage(
                                 data = "https://q.qlogo.cn/g?b=qq&nk=${record.uin}&s=100",
                                 size = 28.dp,
-                                shape = Shapes.search
+                                shape = RoundedCornerShape(28.dp)
                             )
                         }) {
                         it.dismiss()

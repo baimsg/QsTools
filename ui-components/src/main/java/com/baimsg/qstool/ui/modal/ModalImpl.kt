@@ -3,6 +3,7 @@ package com.baimsg.qstool.ui.modal
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.animation.*
@@ -16,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import com.baimsg.qstool.base.utils.extensions.hideSoftInput
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -110,6 +112,7 @@ internal abstract class ModalPresent(
         }
         isShown = true
         rootLayout.addView(composeLayout, generateLayoutParams())
+        (rootLayout.context as? ComponentActivity)?.hideSoftInput()
         composeLayout.visibility = View.VISIBLE
         visibleFlow.value = true
         onBackPressedDispatcher.addCallback(onBackPressedCallback = onBackPressedCallback)
