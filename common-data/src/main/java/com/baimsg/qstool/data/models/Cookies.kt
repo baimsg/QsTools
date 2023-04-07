@@ -43,10 +43,14 @@ data class Cookies(
 
     val defaultHeaders: Map<String, String>
         get() = mapOf(
+            "user-agent" to "Mozilla/5.0 (Linux; Android 11; Mi9 Pro 5G Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/98.0.4758.102 MQQBrowser/6.2 TBS/046403 Mobile Safari/537.36 V1_AND_SQ_8.9.38_3856_YYB_D QQ/8.9.38.10545 NetType/4G WebP/0.3.0 AppId/537154738 Pixel/1080 StatusBarHeight/76 SimpleUISwitch/0 QQTheme/1000 StudyMode/0 CurrentMode/0 CurrentFontScale/1.0 GlobalDensityScale/0.9818182 AllowLandscape/false InMagicWin/0",
             "qname-service" to "1935233:65536",
             "qname-space" to "Production",
+            "sec-fetch-site" to "same-origin",
+            "sec-fetch-mode" to "cors",
+            "sec-fetch-dest" to "empty",
             "origin" to "https://accounts.qq.com",
-            "referer" to "https://accounts.qq.com/phone/verify",
+            "referer" to "https://accounts.qq.com/safe/securityphone?from=setting",
             "Cookie" to cookie
         )
 }

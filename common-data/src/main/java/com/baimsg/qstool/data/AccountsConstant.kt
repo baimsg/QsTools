@@ -6,7 +6,9 @@ package com.baimsg.qstool.data
  **/
 object AccountsConstant {
 
-    const val APP_ID = "1600001573"
+    const val APP_ID = 101867630
+    const val FACE_APP_ID = 101867630
+    const val GUID = "3c037f3a986169fd86dfa8f4dcd257af"
     const val STYLE = "9"
     const val DOMAIN_ID = "761"
 
@@ -18,7 +20,7 @@ object AccountsConstant {
     @JvmOverloads
     fun createLoginUrl(
         style: String = STYLE,
-        appId: String = APP_ID,
+        appId: Int = APP_ID,
         s_url: String = SAFE_URL,
         domainId: String = DOMAIN_ID,
     ) = buildString {

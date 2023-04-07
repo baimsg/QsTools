@@ -105,7 +105,7 @@ internal class ChangeViewModel @Inject constructor(
                         _verifyCode.value = action.value
                     }
                     is ChangeAction.Retry -> {
-                        chkRisk(_cookie.value ?: Cookies())
+                        queryVerifyMethod(_cookie.value ?: Cookies())
                     }
                     is ChangeAction.RequestSms -> {
                         getSms(_cookie.value ?: Cookies(), _phoneInfo.value)
@@ -148,7 +148,7 @@ internal class ChangeViewModel @Inject constructor(
              */
             _cookie.collectLatest {
                 it?.let { cookies ->
-                    chkRisk(cookies)
+                    queryVerifyMethod(cookies)
                 }
             }
         }
@@ -168,7 +168,7 @@ internal class ChangeViewModel @Inject constructor(
             onSuccess { risk ->
                 _checkRisk.value = risk
                 if (risk.retcode == 0) {
-                    queryVerifyMethod(risk, cookies)
+                    queryVerifyMethod(cookies)
                 } else {
                     _invokeStatus.value = InvokeFail(risk.retmsg)
                 }
@@ -178,12 +178,11 @@ internal class ChangeViewModel @Inject constructor(
 
     /**
      * 获取验证方式（初始化）
-     * @param checkRisk 风险数据包
      * @param cookies 登录数据包
      */
-    private suspend fun queryVerifyMethod(checkRisk: CheckRisk, cookies: Cookies) {
+    private suspend fun queryVerifyMethod(cookies: Cookies) {
         _invokeStatus.value = InvokeLoading("获取验证方式...")
-        accountsDataResource.queryVerifyMethod(checkRisk.ticket, cookies).apply {
+        accountsDataResource.queryVerifyMethod(cookies).apply {
             onFailure {
                 _invokeStatus.value = InvokeFail("${it.message}")
             }

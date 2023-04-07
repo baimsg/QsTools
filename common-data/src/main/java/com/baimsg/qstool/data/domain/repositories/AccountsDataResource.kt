@@ -1,8 +1,10 @@
 package com.baimsg.qstool.data.domain.repositories
 
 import com.baimsg.qstool.base.CoroutineDispatchers
+import com.baimsg.qstool.data.AccountsConstant
 import com.baimsg.qstool.data.api.AppEndpoints
 import com.baimsg.qstool.data.models.*
+import com.baimsg.qstool.utils.extensions.now
 import com.baimsg.qstool.utils.extensions.resultApiCall
 import com.baimsg.qstool.utils.extensions.toRequestBody
 import kotlinx.serialization.json.buildJsonObject
@@ -31,21 +33,7 @@ class AccountsDataResource @Inject constructor(
                         put("src", 2)
                         put("scene", 251)
                         put("platform", 6)
-                        put("version", "100")
-                    })
-                }.toRequestBody(), headers = cookies.defaultHeaders
-            )
-        }
-
-    suspend fun queryMbPhone(cookies: Cookies): Result<MbPhoneInfo> =
-        resultApiCall(dispatchers.network) {
-            appEndpoints.queryMbPhone(
-                bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
-                    put("com", buildJsonObject {
-                        put("src", 2)
-                        put("scene", 551)
-                        put("platform", 6)
-                        put("version", "100")
+                        put("version", "8938")
                     })
                 }.toRequestBody(), headers = cookies.defaultHeaders
             )
@@ -59,11 +47,13 @@ class AccountsDataResource @Inject constructor(
         appEndpoints.chkRisk(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
-                    put("src", 2)
-                    put("scene", 1104)
-                    put("platform", 6)
-                    put("version", "100")
+                    put("src", 1)
+                    put("scene", 704)
+                    put("platform", 2)
+                    put("version", "8938")
                 })
+                put("nonce", Random(999999).nextInt())
+                put("faceAppid", AccountsConstant.FACE_APP_ID)
             }.toRequestBody(), headers = cookies.defaultHeaders
         )
     }
@@ -71,22 +61,43 @@ class AccountsDataResource @Inject constructor(
     /**
      * 获取验证方式
      */
-    suspend fun queryVerifyMethod(riskTicket: String, cookies: Cookies): Result<VerifyMethod> =
+    suspend fun queryVerifyMethod(cookies: Cookies): Result<VerifyMethod> =
         resultApiCall(dispatchers.network) {
             appEndpoints.queryVerifyMethod(
                 bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                     put("com", buildJsonObject {
-                        put("src", 2)
-                        put("scene", 751)
-                        put("platform", 6)
-                        put("version", "100")
+                        put("src", 1)
+                        put("scene", 704)
+                        put("platform", 2)
+                        put("version", "8938")
                     })
-                    put("nonce", Random(9999999).nextInt())
-                    put("faceAppid", 101966366)
-                    put("riskTicket", riskTicket)
+                    put("nonce", Random(999999).nextInt())
+                    put("faceAppid", AccountsConstant.FACE_APP_ID)
                 }.toRequestBody(), headers = cookies.defaultHeaders
             )
         }
+
+    /**
+     * 查找绑定手机
+     */
+    suspend fun queryMbPhone(cookies: Cookies): Result<MbPhoneInfo> =
+        resultApiCall(dispatchers.network) {
+            appEndpoints.queryMbPhone(
+                bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
+                    put("com", buildJsonObject {
+                        put("src", 1)
+                        put("scene", 501)
+                        put("platform", 2)
+                        put("version", "8938")
+                    })
+                    put("appid", AccountsConstant.APP_ID)
+                    put("check", true)
+                    put("guid", AccountsConstant.GUID)
+                    put("loginTime", now() / 1000)
+                }.toRequestBody(), headers = cookies.defaultHeaders
+            )
+        }
+
 
     /**
      * 获取验证码
@@ -100,10 +111,10 @@ class AccountsDataResource @Inject constructor(
         appEndpoints.getSms(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
-                    put("src", 2)
-                    put("scene", 351)
-                    put("platform", 6)
-                    put("version", "100")
+                    put("src", 1)
+                    put("scene", 301)
+                    put("platform", 2)
+                    put("version", "8938")
                 })
                 put("way", way)
                 put("areaCode", areaCode)
@@ -123,10 +134,10 @@ class AccountsDataResource @Inject constructor(
         appEndpoints.chkSms(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
-                    put("src", 2)
-                    put("scene", 351)
-                    put("platform", 6)
-                    put("version", "100")
+                    put("src", 1)
+                    put("scene", 301)
+                    put("platform", 2)
+                    put("version", "8938")
                 })
                 put("way", phoneInfo.way)
                 put("areaCode", phoneInfo.areaCode)
@@ -147,10 +158,10 @@ class AccountsDataResource @Inject constructor(
         appEndpoints.verifyMbPhone(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
-                    put("src", 2)
-                    put("scene", 951)
-                    put("platform", 6)
-                    put("version", "100")
+                    put("src", 1)
+                    put("scene", 901)
+                    put("platform", 2)
+                    put("version", "8938")
                 })
                 put("areaCode", areaCode)
                 put("mobile", mobile)
@@ -170,10 +181,21 @@ class AccountsDataResource @Inject constructor(
         appEndpoints.changeMbPhone(
             bkn = getBkn(cookies.pSKey), requestBody = buildJsonObject {
                 put("com", buildJsonObject {
-                    put("src", 2)
-                    put("scene", 251)
-                    put("platform", 6)
-                    put("version", "100")
+                    put("src", 1)
+                    put("scene", 202)
+                    put("platform", 2)
+                    put("version", "8938")
+                    put("device", buildJsonObject {
+                        put("guid", "3c037f3a986169fd86dfa8f4dcd257af")
+                        put("qimei", "9d4ce4080fb4ea84750245bb100014016503")
+                        put("qimei36", "9d4ce4080fb4ea84750245bb100014016503")
+                        put("subappid", "537154738")
+                        put("platform", "Android")
+                        put("brand", "Xiaomi")
+                        put("model", "Mi9 Pro 5G")
+                        put("bssid", "")
+                        put("devInfo", "Xiaomi Mi9 Pro 5G")
+                    })
                 })
                 put("type", type)
                 put("ticket", buildJsonObject {

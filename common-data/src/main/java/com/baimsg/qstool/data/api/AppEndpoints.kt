@@ -65,7 +65,7 @@ interface AppEndpoints {
         @Header(NetConstant.DYNAMIC_KEY) urlName: String = NetConstant.ACCOUNTS_QQ,
     ): MbPhoneState
 
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/querymbphone")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/querymbphone")
     suspend fun queryMbPhone(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -76,7 +76,7 @@ interface AppEndpoints {
     /**
      * 检查账号是否存在风险
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chkrisk")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/chkrisk")
     suspend fun chkRisk(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -87,7 +87,7 @@ interface AppEndpoints {
     /**
      * 获取验证方法
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/queryverifymethod")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/queryverifymethod")
     suspend fun queryVerifyMethod(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -98,7 +98,7 @@ interface AppEndpoints {
     /**
      * 获取验证码
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/getsms")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/getsms")
     suspend fun getSms(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -109,7 +109,7 @@ interface AppEndpoints {
     /**
      * 校验验证码
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chksms")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/chksms")
     suspend fun chkSms(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -120,7 +120,7 @@ interface AppEndpoints {
     /**
      * 验证手机号是否合法
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/verifymbphone")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/verifymbphone")
     suspend fun verifyMbPhone(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
@@ -131,7 +131,7 @@ interface AppEndpoints {
     /**
      * 换绑
      */
-    @POST("phone/verify/proxy/domain/qq110.qq.com/v3/chgmbphone")
+    @POST("safe/securityphone/proxy/domain/qq110.qq.com/v3/chgmbphone")
     suspend fun changeMbPhone(
         @Query("bkn") bkn: Int,
         @Body requestBody: RequestBody,
