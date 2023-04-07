@@ -5,7 +5,6 @@ package com.baimsg.qstool.ui.home
  *
  **/
 sealed class HomeAction {
-    class Change(type: Int) : HomeAction()
 
-    class ShowAndHideCookieRecord(val isShow: Boolean) : HomeAction()
+    object RefreshCookieRecord : HomeAction()
 }

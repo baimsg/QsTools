@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -77,6 +78,10 @@ internal fun HomeScreen(
     ) {
         TopBar(title = stringResource(R.string.app_name))
         HomeContent(view, viewState.cookieRecords, openLoginScreen, openChangeScreen)
+    }
+
+    LaunchedEffect(true) {
+        executor(HomeAction.RefreshCookieRecord)
     }
 }
 
@@ -162,7 +167,7 @@ fun showCookieRecord(
             DialogActions(
                 modal = it, actions = listOf(ModalAction(text = "添加账号", color = iconColor) {
                     it.dismiss()
-                    openLoginScreen.invoke()
+                    openLoginScreen()
                 })
             )
         }

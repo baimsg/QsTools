@@ -15,7 +15,8 @@ import javax.inject.Inject
  *
  **/
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val cookieDataResource: CookieDataResource) : ViewModel() {
+class HomeViewModel @Inject constructor(private val cookieDataResource: CookieDataResource) :
+    ViewModel() {
 
     private val pendingAction: MutableSharedFlow<HomeAction> = MutableSharedFlow()
 
@@ -29,19 +30,20 @@ class HomeViewModel @Inject constructor(private val cookieDataResource: CookieDa
 
     init {
         viewModelScope.launch {
-            _cookieRecords.value = cookieDataResource.cookies()
+            loadCookieRecords()
 
             pendingAction.collectLatest { action ->
                 when (action) {
-                    is HomeAction.Change -> {
-
-                    }
-                    is HomeAction.ShowAndHideCookieRecord -> {
-                        _showCookieRecord.value = action.isShow
+                    is HomeAction.RefreshCookieRecord -> {
+                        loadCookieRecords()
                     }
                 }
             }
         }
+    }
+
+    private suspend fun loadCookieRecords() {
+        _cookieRecords.value = cookieDataResource.cookies()
     }
 
     fun submitAction(action: HomeAction) {

@@ -23,4 +23,8 @@ class MainActivityViewModel @Inject constructor() : ViewModel() {
      * 是否全屏模式
      */
     var isFullScreen by mutableStateOf(false)
+
+    var blockBack by mutableStateOf(false)
+
+
 }
