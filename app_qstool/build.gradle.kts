@@ -1,3 +1,5 @@
+import com.baimsg.build.fog.plugin.BytecodeFogExtension
+import com.baimsg.build.fog.plugin.BytecodeFogPlugin
 import com.baimsg.plugin.Dep
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -8,6 +10,17 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization")
+}
+
+apply<BytecodeFogPlugin>()
+
+the<BytecodeFogExtension>().apply {
+    enable = true
+    debug = true
+    kg = com.baimsg.build.fog.kg.RandomKeyGenerator()
+    ignoreFogClassName = com.baimsg.build.fog.annotation.BytecodeFogIgnore::class.java.name
+    implementation = com.baimsg.build.fog.xor.BytecodeFogImpl::class.java.name
+    fogPackages = listOf("com.baimsg")
 }
 
 fun runCommand(project: Project, command: String): String {
