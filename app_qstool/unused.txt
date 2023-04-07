@@ -19976,11 +19976,14 @@ coil.video.R$string
 coil.video.R$style
 coil.video.R$styleable
 coil.video.R
-com.baimsg.qstool.AppNavigationKt:
-    public static final java.lang.String ROUTER_KEY_UIN
+com.baimsg.build.fog.IBytecodeFog
+com.baimsg.build.fog.IKeyGenerator
+com.baimsg.build.fog.annotation.BytecodeFogIgnore
+com.baimsg.build.fog.xor.BytecodeFogImpl:
+    public byte[] encrypt(java.lang.String,byte[])
+    public boolean shouldFog(java.lang.String)
 com.baimsg.qstool.AppViewModelStore:
     public static final int $stable
-    public static final java.lang.String DEFAULT_KEY
     public final synthetic androidx.lifecycle.ViewModel viewModels(androidx.compose.runtime.Composer,int)
 com.baimsg.qstool.BuildConfig
 com.baimsg.qstool.DaggerQstoolApp_HiltComponents_SingletonC$ActivityCImpl:
@@ -20143,15 +20146,6 @@ com.baimsg.qstool.base.utils.BroadcastReceiverFlowKt$flowBroadcasts$2
 com.baimsg.qstool.base.utils.BroadcastReceiverFlowKt$flowBroadcasts$receiver$1
 com.baimsg.qstool.base.utils.BroadcastReceiverFlowKt
 com.baimsg.qstool.base.utils.DeviceHelper:
-    private static final java.lang.String CPU_FILE_PATH_0
-    private static final java.lang.String CPU_FILE_PATH_1
-    private static final java.lang.String CPU_FILE_PATH_2
-    private static final java.lang.String FLYME
-    private static final java.lang.String KEY_FLYME_VERSION_NAME
-    private static final java.lang.String KEY_MIUI_VERSION_NAME
-    private static final java.lang.String POWER_PROFILE_CLASS
-    private static final java.lang.String ZTE_C2016
-    private static final java.lang.String ZUK_Z1
     private static boolean sIsTabletChecked
     private static boolean sIsTabletValue
     private final boolean checkOp(android.content.Context,int)
@@ -20182,10 +20176,6 @@ com.baimsg.qstool.base.utils.DeviceHelper:
     private final boolean sIsTablet(android.content.Context)
     public final void setSInnerStorageSize(long)
 com.baimsg.qstool.base.utils.DisplayHelperKt:
-    private static final java.lang.String HUAWAI_DISPLAY_NOTCH_STATUS
-    private static final java.lang.String VIVO_NAVIGATION_GESTURE
-    private static final java.lang.String XIAOMI_DISPLAY_NOTCH_STATUS
-    private static final java.lang.String XIAOMI_FULLSCREEN_GESTURE
     private static java.lang.Boolean sHasCamera
     private static final boolean deviceHasNavigationBar()
     private static final int[] doGetRealScreenSize(android.content.Context)
@@ -20365,11 +20355,6 @@ com.baimsg.qstool.data.api.AppEndpoints:
     public abstract java.lang.Object loadConfig(java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,kotlin.coroutines.Continuation)
     public abstract java.lang.Object loadGithub(java.lang.String,java.lang.String,java.lang.String,kotlin.coroutines.Continuation)
     public abstract java.lang.Object queryMbPhoneStat(int,okhttp3.RequestBody,java.util.Map,java.lang.String,kotlin.coroutines.Continuation)
-com.baimsg.qstool.data.api.NetConstant:
-    public static final java.lang.String ACCOUNTS_QQ
-    public static final java.lang.String BASE_URL
-    public static final java.lang.String DYNAMIC_KEY
-    public static final java.lang.String YOUDAO_NOTE_URL
 com.baimsg.qstool.data.db.AppDatabase_Impl:
     public void clearAllTables()
 com.baimsg.qstool.data.db.DatabaseMigrations:

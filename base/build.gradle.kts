@@ -55,6 +55,8 @@ dependencies {
     api(Dep.Libs.mmkv)
     api(Dep.Libs.store)
 
+    api(project(":bytecode-fog-ext"))
+
     testImplementation(Dep.Libs.junit)
     androidTestImplementation(Dep.AndroidX.Test.junitKtx)
     androidTestImplementation(Dep.AndroidX.Test.espressoCore)
