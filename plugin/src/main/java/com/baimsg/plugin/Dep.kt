@@ -8,8 +8,8 @@ import org.gradle.api.JavaVersion
  **/
 object Dep {
 
-    val javaVersion = JavaVersion.VERSION_11
-    const val kotlinJvmTarget = "11"
+    val javaVersion = JavaVersion.VERSION_17
+    const val kotlinJvmTarget = "17"
     const val kotlinVer = "1.8.10"
     const val androidGradleVer = "7.4.2"
     const val compileSdk = 33
@@ -134,7 +134,7 @@ object Dep {
             const val performance = "androidx.core:core-performance:1.0.0-alpha02"
             const val shortcuts = "androidx.core:core-google-shortcuts:1.1.0"
             const val remoteViews = "androidx.core:core-remoteviews:1.0.0-beta03"
-            const val splashscreen = "androidx.core:core-splashscreen:1.1.0-alpha01"
+            const val splashscreen = "androidx.core:core-splashscreen:1.0.0"
         }
 
         object Collection {

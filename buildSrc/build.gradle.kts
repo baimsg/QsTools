@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle-api:7.4.2")
+    implementation("com.android.tools.build:gradle-api:8.0.0")
     implementation(kotlin("stdlib"))
     implementation("org.ow2.asm:asm-util:9.2")
     implementation("commons-io:commons-io:2.11.0")

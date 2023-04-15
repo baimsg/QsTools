@@ -38,7 +38,6 @@ android {
     namespace = "com.baimsg.qstool"
     compileSdk = Dep.compileSdk
 
-    compileSdkPreview = "UpsideDownCake"
     /**
      * 签名信息
      *
@@ -60,7 +59,6 @@ android {
     }
 
     defaultConfig {
-        compileSdkPreview = "UpsideDownCake"
 
         applicationId = Dep.packageName
         minSdk = Dep.minSdk
